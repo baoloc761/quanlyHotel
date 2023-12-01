@@ -4,12 +4,10 @@ import { RouterOutlet } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule],
-  templateUrl: './DashBo',
-  styleUrl: './DashBoard/mainDashBoard.component.scss'
+  selector: 'dashboard',
+  templateUrl: './mainDashboard.component.html',
+  styleUrls: [ './mainDashBoard.component.scss' ]
 })
-export class mainDashboard {
+export class Dashboard {
   title = 'hihihi'
 }

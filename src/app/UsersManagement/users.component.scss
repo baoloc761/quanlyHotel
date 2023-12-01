@@ -1,0 +1,31 @@
+.fa-edit, .fa-info, .fa-search {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    &:hover{
+        border: 1px solid #c4c4c4;
+        border-radius: 50%;
+    }
+}
+.fa-info {
+    margin-right: 10px;
+    color: rgb(45, 45, 62);
+}
+.fa-edit {
+    color: blue;
+}
+.filter-area {
+    position: relative;
+    margin-bottom: 10px;
+    display: inline-block;
+    width: 100%;
+    input {
+        width: 30%;
+        float: right;
+    }
+    button {
+        position: absolute;
+        right: 0;
+    }
+}
