@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AccountService } from '@app/_services';
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({ templateUrl: 'register.component.html', styleUrls: [ './register.component.scss'] })
 export class RegisterComponent implements OnInit {
     form!: FormGroup;
     loading = false;
@@ -24,17 +24,35 @@ export class RegisterComponent implements OnInit {
         }
     }
 
+    myOptionsTypeUSer = [
+        { id: 1, name: 'admin', isAdmin: true },
+        { id: 2, name: 'userStaff', isAdmin: false }
+    ];
+    selected?: any = {};
+
     ngOnInit() {
         this.form = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            typeUser: [ null, Validators.required ]
         });
     }
 
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
+
+    enCodeValue(val: any) {
+        if (_.isEmpty(val)) return ''
+        return JSON.stringify(val)
+    }
+
+
+    deCode(hashedValue: any) {
+        if (_.isEmpty(hashedValue)) return {}
+        return JSON.parse(hashedValue)
+    }
 
     onSubmit() {
         this.submitted = true;
@@ -48,7 +66,9 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.accountService.register(this.form.value)
+        const newUser = {...this.form.value, typeUser: this.deCode(this.f.typeUser.value)}
+        console.log(newUser)
+        this.accountService.register(newUser)
             .pipe(first())
             .subscribe({
                 next: () => {

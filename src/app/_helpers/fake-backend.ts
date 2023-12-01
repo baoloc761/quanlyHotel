@@ -47,6 +47,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
             users.push(user);
+            localStorage.removeItem(usersKey);
             localStorage.setItem(usersKey, JSON.stringify(users));
             return ok();
         }

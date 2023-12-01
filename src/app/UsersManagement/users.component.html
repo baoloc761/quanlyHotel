@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 <div [formGroup]="form" class="filter-area">
-    <input type="text" name="keyword" formControlName="keyword" class="form-control" />
+    <input type="text" name="keyword" formControlName="keyword" class="form-control" (keyup.enter)="search()" />
     <button mat-icon-button (click)="search()"><i class="fas fa-search"></i></button>
 </div>
 

@@ -6,11 +6,12 @@ import { RegisterComponent } from './LoginHotel/register.component';
 import { UsersComponent } from './UsersManagement/users.component';
 
 export const routes: Routes = [
-  { path: '', component: Dashboard, canActivate: [AuthGuard] },
+  { path: '', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: Dashboard, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'account/login', component: LoginComponent },
   { path: 'account/register', component: RegisterComponent },
-  { path: 'account/users', component: UsersComponent },
+  { path: 'account/users', component: UsersComponent, canActivate: [AuthGuard] },
 
   // otherwise redirect to dashboard
   { path: '**', redirectTo: '' }

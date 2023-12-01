@@ -8,8 +8,6 @@ import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 
 // array in local storage for registered users
-const usersKey = 'angular-tutorial-users';
-let users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -49,7 +47,9 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
     }
 
-    getUsers(keyword?: string) {
+    getUsers(keyword?: string) {        
+        const usersKey = 'angular-tutorial-users';
+        const users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
         if (_.isEmpty(keyword)) return Object.assign([], users);
         return _.filter(users, (u) => u.username.toLowerCase().indexOf(keyword?.toLocaleLowerCase()) !== -1 ||
         u.firstName.toLowerCase().indexOf(keyword?.toLocaleLowerCase()) !== -1 ||

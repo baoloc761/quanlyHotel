@@ -13,7 +13,7 @@ export class AppComponent {
     constructor(private accountService: AccountService) {
         this.accountService.user.subscribe(x => this.user = x);
     }
-
+    
     logout() {
         this.accountService.logout();
     }

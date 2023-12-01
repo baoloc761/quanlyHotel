@@ -4,5 +4,6 @@ export class User {
     password?: string;
     firstName?: string;
     lastName?: string;
+    typeUser?: { id: number, name: string, isAdmin: boolean };
     token?: string;
 }
