@@ -20,6 +20,7 @@
             "outputPath": "dist/quanly-hotel",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "preserveSymlinks": true,
             "polyfills": [
               "zone.js"
             ],
@@ -102,5 +103,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "5ea0ac42-1424-4f5e-98dc-aef19f944dd3"
   }
 }
