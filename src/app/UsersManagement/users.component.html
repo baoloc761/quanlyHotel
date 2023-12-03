@@ -1,23 +1,26 @@
-<h1>{{title}}</h1>
-<div [formGroup]="form" class="filter-area">
-    <input type="text" name="keyword" formControlName="keyword" class="form-control" (keyup.enter)="search()" />
-    <button mat-icon-button (click)="search()"><i class="fas fa-search"></i></button>
+<h1>{{'Pages.UserManagement.title' | translate }}</h1>
+<div class="d-flex justify-content-between mb-3">
+    <button (click)="OpenDialog()" type="button" class="btn btn-primary">{{ 'RegistNewAccount' | translate }}</button>
+    <div [formGroup]="form" class="filter-area">
+        <input type="text" name="keyword" formControlName="keyword" class="form-control" (keyup.enter)="search()" [placeholder]="'enterName' | translate : { name: ('keyword' | translate) }" />
+        <button mat-icon-button (click)="search()"><i class="fas fa-search"></i></button>
+    </div>
 </div>
 
 <table class="table table-hover table-bordered">
     <thead>
         <tr>
-            <th>No</th>
-            <th>UserName</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>Action</th>
+            <th>{{ 'No' | translate }}</th>
+            <th>{{ 'UserName' | translate }}</th>
+            <th>{{ 'FirstName' | translate }}</th>
+            <th>{{ 'LastName' | translate }}</th>
+            <th>{{ 'Action' | translate }}</th>
         </tr>
     </thead>
     <tbody>
         <ng-container *ngIf="users.length < 1">
             <tr>
-                <td colspan="5" class="text-center fw-bold">There is no user</td>
+                <td colspan="5" class="text-center fw-bold">{{ 'ThereIsNoRecordName' | translate : { name: ('user' | translate) } }}</td>
             </tr>
         </ng-container>
         <ng-container *ngIf="users.length > 0">
@@ -27,7 +30,9 @@
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>
-                    <span><i class="fa fa-info"></i></span>
+                    <a [routerLink]="['/user', user.id]">
+                        <span><i class="fa fa-info"></i></span>
+                    </a>
                     <span><i class="fa fa-edit"></i></span>
                 </td>
             </tr>

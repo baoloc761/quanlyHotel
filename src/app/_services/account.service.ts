@@ -55,4 +55,11 @@ export class AccountService {
         u.firstName.toLowerCase().indexOf(keyword?.toLocaleLowerCase()) !== -1 ||
         u.lastName.toLowerCase().indexOf(keyword?.toLocaleLowerCase()) !== -1)
     }
+
+    getUserById(id?: string) {        
+        const usersKey = 'angular-tutorial-users';
+        const users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
+        if (_.isEmpty(id)) return Object.assign({}, users[0]);
+        return _.find(users, (u) => u.id === id)
+    }
 }

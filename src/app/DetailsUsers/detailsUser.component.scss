@@ -1,0 +1,30 @@
+.mat-card {
+  background: #f9f9cb;
+  color: blueviolet;
+  .mat-card-header {
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    font-weight: bold;
+    font-size: 18pt;
+    margin-bottom: 16px;
+  }
+  .user-block {
+    display: flex;
+    grid-gap: 0 15px;
+    .user-label {
+      width: 200px;
+      font-weight: bold;
+    }
+    .user-value {
+      font-style: italic;
+    }
+    &:hover {
+      color: lighten($color: #ffffff, $amount: 10);
+      background-color: lightblue;
+    }
+    &:not(:first-child, :last-child) {
+      padding: 8px 0;
+    }
+  }
+}

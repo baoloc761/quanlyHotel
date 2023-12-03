@@ -1,0 +1,49 @@
+{
+	"vi": "Vietnamese",
+	"en": "English",
+	"UserName": "User Name",
+	"FirstName": "First Name",
+	"LastName": "Last Name",
+	"UserID": "User ID",
+	"Password": "Password",
+	"Register": "Register",
+	"Create": "Create",
+	"Search": "Search",
+	"ThereIsNoRecordName": "There's no {{name}}",
+	"Info": "Info",
+	"Detail": "Detail",
+	"Edit": "Edit",
+	"New": "New",
+	"Delete": "Delete",
+	"Cancel": "Cancel",
+	"Role": "role",
+	"Login": "Login",
+	"Logout": "Logout",
+	"Action": "Action",
+	"No": "No",
+	"user": "user",
+	"UserManagement": "Users Management",
+	"keyword": "keyword",
+	"LevelAccount": "Level Account",
+	"Pages": {
+		"Home": {
+			"id": 1,
+			"title": "Home page",
+			"path": "Home"
+		},
+		"UserManagement": {
+			"id": 2,
+			"title": "Users Management",
+			"path": "account/users"
+		}
+	},
+	"Validations": {
+		"PleaseSelectField": "Please select a/an {{field}}",
+		"ParamNameIsRequired": "{{name}} is required",
+		"FieldMustInRange": "{{field}} must be >= {{min}} and <= {{max}} value",
+		"FieldLengthRequire": "{{field}} length must >= {{length}}"
+	},
+	"WelcomeUser": "Welcome {{user}}",
+	"RegistNewAccount": "+ Regist New Account",
+	"enterName": "Please enter \"{{name}}\""
+}

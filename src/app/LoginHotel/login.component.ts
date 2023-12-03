@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AccountService } from '@app/_services'
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -17,8 +18,17 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private translate: TranslateService
     ) {
+        translate.addLangs(['en', 'vi'])
+        let currentLanguage = 'en'
+        if (localStorage.getItem('currentLanguage')) {
+            currentLanguage = localStorage.getItem('currentLanguage') ?? 'en'
+        }
+        translate.setDefaultLang(currentLanguage)
+        translate.use(currentLanguage)
+        localStorage.setItem('currentLanguage', currentLanguage)
         // redirect to home if already logged in
         if (this.accountService.userValue) {
             this.router.navigate(['/']);

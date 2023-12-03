@@ -1,0 +1,49 @@
+{
+	"vi": "Tiếng Việt",
+	"en": "Tiếng Anh",
+	"UserName": "Tên đăng nhập",
+	"FirstName": "Họ",
+	"LastName": "Tên và lót",
+	"UserID": "User ID",
+	"Password": "Mật khẩu",
+	"Register": "Đăng ký",
+	"Create": "Tạo",
+	"Search": "Tìm kiếm",
+	"ThereIsNoRecordName": "Không tồn tại {{name}} nào",
+	"Info": "Thông tin",
+	"Detail": "Chi tiết",
+	"Edit": "Điều chỉnh",
+	"New": "Mới",
+	"Delete": "Xóa",
+	"Cancel": "Hủy",
+	"Role": "cấp bậc",
+	"Login": "Đăng nhập",
+	"Logout": "Đăng xuất",
+	"Action": "Thao tác",
+	"No": "Stt",
+	"user": "người dùng",
+	"UserManagement": "Quản lý người dùng",
+	"keyword": "từ khóa",
+	"LevelAccount": "Cấp bậc người dùng",
+	"Pages": {
+		"Home": {
+			"id": 1,
+			"title": "Trang chủ",
+			"path": "Home"
+		},
+		"UserManagement": {
+			"id": 2,
+			"title": "Quản lý người dùng",
+			"path": "account/users"
+		}
+	},
+	"Validations": {
+		"PleaseSelectField": "Vui lòng chọn {{field}}",
+		"ParamNameIsRequired": "Tham số {{name}} là bắt buộc",
+		"FieldMustInRange": "{{field}} có giá trị phải >= {{min}} và <= {{max}}",
+		"FieldLengthRequire": "{{field}} có độ dài phải >= {{length}}"
+	},
+	"WelcomeUser": "Xin chào {{user}}",
+	"RegistNewAccount": "+ Đăng ký người dùng",
+	"enterName": "Vui lòng nhập \"{{name}}\""
+}

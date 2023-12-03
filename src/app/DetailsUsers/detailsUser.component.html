@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-header>Chi tiết user: {{user?.username}}</mat-card-header>
+    <mat-card-content>
+        <div class="user-block">
+            <div class="user-label">{{'UserId'}}</div>
+            <div class="user-value">{{user?.id}}</div>
+        </div>
+        <div class="user-block">
+            <div class="user-label">{{'UserName'}}</div>
+            <div class="user-value">{{user?.username}}</div>
+        </div>
+        <div class="user-block">
+            <div class="user-label">{{'FirstName'}}</div>
+            <div class="user-value">{{user?.firstName}}</div>
+        </div>
+        <div class="user-block">
+            <div class="user-label">{{'LastName'}}</div>
+            <div class="user-value">{{user?.lastName}}</div>
+        </div>
+    </mat-card-content>
+</mat-card>

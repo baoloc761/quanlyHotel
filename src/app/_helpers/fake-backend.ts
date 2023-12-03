@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
+import * as UUID from 'uuid'
 
 // array in local storage for registered users
 const usersKey = 'angular-tutorial-users';
@@ -45,7 +46,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return error('Username "' + user.username + '" is already taken')
             }
 
-            user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
+            user.id = UUID.v4();
             users.push(user);
             localStorage.removeItem(usersKey);
             localStorage.setItem(usersKey, JSON.stringify(users));

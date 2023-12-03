@@ -1,11 +1,9 @@
-// select:required:invalid {
-//   color: gray;
-// }
-// /*option có value="" và trạng thái disabled không được hiển thị khi nhấn vào mũi tên tam giác. Bình thường thì nó vẫn được hiển thị*/
-// option[value=""][disabled] {
-//   display: none;
-// }
-// /*option có màu đen */
-// option {
-//   color: black;
-// }
+.card {
+  min-width: 600px;
+  .card-header {
+    color: black;
+  }
+  label {
+    color: black;
+  }
+}

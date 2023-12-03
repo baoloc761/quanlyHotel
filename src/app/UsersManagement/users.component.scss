@@ -17,15 +17,18 @@
 }
 .filter-area {
     position: relative;
-    margin-bottom: 10px;
     display: inline-block;
-    width: 100%;
     input {
-        width: 30%;
         float: right;
     }
     button {
         position: absolute;
         right: 0;
     }
+}
+
+::ng-deep .custom-mat-dialog-bdrop {
+    filter: blur(20px);
+    background-color: #aba1a1;
+    opacity: 0.7 !important;
 }

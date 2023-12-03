@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
+import { MatDialog } from '@angular/material/dialog';
 import { AccountService } from '@app/_services';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({ templateUrl: 'register.component.html', styleUrls: [ './register.component.scss'] })
 export class RegisterComponent implements OnInit {
@@ -16,7 +17,9 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private dialogRef: MatDialog,
+        private snackBar: MatSnackBar
     ) {
         // redirect to home if already logged in
         if (this.accountService.userValue) {
@@ -54,6 +57,12 @@ export class RegisterComponent implements OnInit {
         return JSON.parse(hashedValue)
     }
 
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+          duration: 2000,
+        });
+    }
+
     onSubmit() {
         this.submitted = true;
 
@@ -72,12 +81,18 @@ export class RegisterComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.router.navigate(['/account/login'], { queryParams: { registered: true }});
+                    this.openSnackBar('Thêm tài khoản thành công', 'OK')
+                    this.dialogRef.closeAll()
                 },
                 error: error => {
                     this.error = error;
                     this.loading = false;
+                    this.openSnackBar('Có lỗi' + error, 'ERROR')
                 }
             });
+    }
+
+    cancel() {
+        this.dialogRef.closeAll()
     }
 }
