@@ -16,7 +16,8 @@ import { UserEditComponent } from './edit/user-edit.component';
 })
 export class UsersComponent implements OnInit {
   form!: FormGroup;
-  users: any[] = []
+  users: any[] = [];
+  user: any = JSON.parse(localStorage.getItem('user') || '{claims: []}')
 
   constructor(private formBuilder: FormBuilder,
      private accountService: AccountService,
@@ -61,5 +62,14 @@ export class UsersComponent implements OnInit {
       backdropClass: 'custom-mat-dialog-bdrop',
       disableClose: true
     });
+  }
+
+  canView() {
+    return _.some(this.user.claims, (claim) => claim.canView)
+  }
+
+
+  canEdit() {
+    return _.some(this.user.claims, (claim) => claim.canEdit)
   }
 }

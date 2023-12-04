@@ -49,6 +49,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
 
             user.id = UUID.v4();
+            if (user.typeUser.isAdmin) {
+                user.claims = [
+                    { pageId: 2, canList: true, canEdit: true, canDelete: true, canView: true }
+                ]
+            } else {
+                user.claims = [
+                    { pageId: 2, canList: true, canEdit: false, canDelete: false, canView: true }
+                ]
+            }
             users.push(user);
             localStorage.removeItem(usersKey);
             localStorage.setItem(usersKey, JSON.stringify(users));
@@ -83,8 +92,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function basicDetails(user: any) {
-            const { id, username, firstName, lastName } = user;
-            return { id, username, firstName, lastName };
+            const { id, username, firstName, lastName, claims } = user;
+            return { id, username, firstName, lastName, claims };
         }
     }
 }
