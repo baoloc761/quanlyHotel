@@ -20,6 +20,7 @@ import { ErrorInterceptor, JwtInterceptor, fakeBackendProvider } from './_helper
 import { UsersComponent } from './UsersManagement/users.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { UserEditComponent } from './UsersManagement/edit/user-edit.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     Dashboard,
     RegisterComponent,
     UsersComponent,
-    DetailsUsersComponent
+    DetailsUsersComponent,
+    UserEditComponent
   ],
   providers: [ 
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

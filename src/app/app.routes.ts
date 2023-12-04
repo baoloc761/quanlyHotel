@@ -13,7 +13,7 @@ export const routes: Routes = [
   { path: 'account/login', component: LoginComponent },
   { path: 'account/register', component: RegisterComponent },
   { path: 'account/users', component: UsersComponent, canActivate: [AuthGuard] },
-  { path: 'user/:id', component: DetailsUsersComponent, canActivate: [AuthGuard] },
+  { path: 'account/user/:id', component: DetailsUsersComponent, canActivate: [AuthGuard] },
 
   // otherwise redirect to dashboard
   { path: '**', redirectTo: '' }

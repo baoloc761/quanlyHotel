@@ -25,6 +25,13 @@
 	"UserManagement": "Quản lý người dùng",
 	"keyword": "từ khóa",
 	"LevelAccount": "Cấp bậc người dùng",
+	"Success": "thành công",
+	"Failed": "thất bại",
+	"Account": "Tài khoản",
+	"ActionEntityResult": "{{actionName}} {{entityName}} {{result}}",
+	"ActionEntityResultWithReason": "{{actionName}} {{entityName}} {{result}} lý do: {{reson}}",
+	"OK": "OK",
+	"ERROR": "ERROR",
 	"Pages": {
 		"Home": {
 			"id": 1,

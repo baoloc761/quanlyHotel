@@ -1,0 +1,56 @@
+<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <div class="card">
+        <h4 class="card-header">{{'Register' | translate }}</h4>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label class="form-label">{{'FirstName' | translate }}</label>
+                    <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">{{"Validations.ParamNameIsRequired" | translate: {name : ('FirstName' | translate) } }}</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{'LastName' | translate }}</label>
+                    <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">{{"Validations.ParamNameIsRequired" | translate: {name : ('LastName' | translate) } }}</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{'UserName' | translate }}</label>
+                    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">{{"Validations.ParamNameIsRequired" | translate: {name : ('UserName' | translate) } }}</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{'Password' | translate }}</label>
+                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">{{"Validations.ParamNameIsRequired" | translate: {name : ('Password' | translate) } }}</div>
+                        <div *ngIf="f.password.errors.minlength">{{'Validations.FieldLengthRequire' | translate : {length : 6, field: ('Password' | translate) } }}</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ 'LevelAccount' | translate }}</label>
+                    <select [ngClass]="{ 'is-invalid': submitted && f.typeUser.errors }" class="form-select form-select-lg mb-3"  formControlName="typeUser" class="form-control">
+                        <option *ngFor="let option of myOptionsTypeUSer" [value]="enCodeValue(option)">
+                          {{ option.name }}
+                        </option>
+                    </select>
+                    
+                    <div *ngIf="submitted && f.typeUser.errors" class="invalid-feedback">
+                        <div *ngIf="f.typeUser.errors.required">{{ 'Validations.PleaseSelectField' | translate : {field: ('Role' | translate)} }}</div>
+                    </div>
+                </div>
+                <div>
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        {{ 'Register' | translate }}
+                    </button>
+                    <a (click)="cancel()" class="btn btn-link">{{ 'Cancel' | translate }}</a>
+                </div>
+            </form>
+        </div>
+    </div>

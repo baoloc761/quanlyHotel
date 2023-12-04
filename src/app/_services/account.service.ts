@@ -47,6 +47,10 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
     }
 
+    updateUser(user: User) {
+        return this.http.post(`${environment.apiUrl}/users/edit`, {user});
+    }
+
     getUsers(keyword?: string) {        
         const usersKey = 'angular-tutorial-users';
         const users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];

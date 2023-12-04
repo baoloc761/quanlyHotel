@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, NgForm } from '@angular/forms';
 import { AccountService } from '@app/_services';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '@app/LoginHotel/register.component';
 import { TranslateService } from '@ngx-translate/core';
+import { User } from '@app/_models';
+import { UserEditComponent } from './edit/user-edit.component';
 
 @Component({
   selector: 'users-list',
@@ -18,7 +20,8 @@ export class UsersComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
      private accountService: AccountService,
-     private dialogRef: MatDialog, private translate: TranslateService) {
+     private dialogRef: MatDialog, private translate: TranslateService,
+     private router: Router) {
   }
 
   ngOnInit() {
@@ -35,6 +38,20 @@ export class UsersComponent implements OnInit {
 
   search() {
     this.users = this.accountService.getUsers(this.keyword)
+  }
+
+  handleUserInfo(user: User) {
+    this.router.navigateByUrl('/account/user/' + user.id ) 
+  }
+
+  handleEditUser(user: User) {
+    this.dialogRef.open(UserEditComponent, {
+      width: '100%',
+      panelClass: 'my-dialog-panel',
+      backdropClass: 'custom-mat-dialog-bdrop',
+      disableClose: true,
+      data: {...user}
+    });
   }
 
   OpenDialog() {

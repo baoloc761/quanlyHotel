@@ -25,6 +25,13 @@
 	"UserManagement": "Users Management",
 	"keyword": "keyword",
 	"LevelAccount": "Level Account",
+	"Success": "success",
+	"Failed": "failed",
+	"Account": "Account",
+	"ActionEntityResult": "{{actionName}} {{entityName}} {{result}}",
+	"ActionEntityResultWithReason": "{{actionName}} {{entityName}} {{result}}, reason: {{reson}}",
+	"OK": "OK",
+	"ERROR": "ERROR",
 	"Pages": {
 		"Home": {
 			"id": 1,

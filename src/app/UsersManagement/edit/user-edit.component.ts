@@ -1,32 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { AccountService } from '@app/_services';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from '@app/_models';
+import { AccountService } from '@app/_services';
 import { TranslateService } from '@ngx-translate/core';
+import { first } from 'rxjs/operators';
 
-@Component({ templateUrl: 'register.component.html', styleUrls: [ './register.component.scss'] })
-export class RegisterComponent implements OnInit {
+@Component({ templateUrl: 'user-edit.component.html', styleUrls: [ './user-edit.component.scss'] })
+export class UserEditComponent implements OnInit {
     form!: FormGroup;
     loading = false;
     submitted = false;
     error?: string;
+    user: User = {}
 
     constructor(
         private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
         private accountService: AccountService,
         private dialogRef: MatDialog,
+        @Inject(MAT_DIALOG_DATA) private data: any,
         private snackBar: MatSnackBar,
         private translate: TranslateService
     ) {
-        // redirect to home if already logged in
-        if (this.accountService.userValue) {
-            this.router.navigate(['/']);
-        }
+        this.user = this.data
     }
 
     myOptionsTypeUSer = [
@@ -37,11 +34,11 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]],
-            typeUser: [ null, Validators.required ]
+            firstName: [this.user?.firstName || '', Validators.required],
+            lastName: [this.user?.lastName || '', Validators.required],
+            username: [this.user?.username || '', Validators.required],
+            password: [this.user?.password || '', [Validators.required, Validators.minLength(6)]],
+            typeUser: [ this.user?.typeUser || null, Validators.required ]
         });
     }
 
@@ -77,20 +74,20 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        const newUser = {...this.form.value, typeUser: this.deCode(this.f.typeUser.value)}
+        const newUser = {...this.user, ...this.form.value, typeUser: this.deCode(this.f.typeUser.value)}
         console.log(newUser)
-        this.accountService.register(newUser)
+        this.accountService.updateUser(newUser)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    const msg = this.translate.instant('ActionEntityResult', { entityName: this.translate.instant('Account'), actionName: this.translate.instant('Create'), result:  this.translate.instant('Success') })
+                    const msg = this.translate.instant('ActionEntityResult', { entityName: this.translate.instant('Account'), actionName: this.translate.instant('Edit'), result:  this.translate.instant('Success') })
                     this.openSnackBar(msg, this.translate.instant('Success'))
                     this.dialogRef.closeAll()
                 },
                 error: error => {
                     this.error = error;
                     this.loading = false;
-                    const msg = this.translate.instant('ActionEntityResultWithReason', { entityName: this.translate.instant('Account'), actionName: this.translate.instant('Create'), result:  this.translate.instant('Failed'), reason: error })
+                    const msg = this.translate.instant('ActionEntityResultWithReason', { entityName: this.translate.instant('Account'), actionName: this.translate.instant('Edit'), result:  this.translate.instant('Failed'), reason: error })
                     this.openSnackBar(msg, this.translate.instant('Failed'))
                 }
             });

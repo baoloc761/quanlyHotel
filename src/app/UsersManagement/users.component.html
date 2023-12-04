@@ -30,10 +30,12 @@
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>
-                    <a [routerLink]="['/user', user.id]">
-                        <span><i class="fa fa-info"></i></span>
-                    </a>
-                    <span><i class="fa fa-edit"></i></span>
+                    <span>
+                        <button mat-icon-button (click)="handleUserInfo(user)"><i class="fas fa-info"></i></button>
+                    </span>
+                    <span>
+                        <button mat-icon-button (click)="handleEditUser(user)"><i class="fas fa-edit"></i></button>
+                    </span>
                 </td>
             </tr>
         </ng-container>

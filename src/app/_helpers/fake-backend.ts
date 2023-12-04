@@ -21,6 +21,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/users/register') && method === 'POST':
                     return register();
+                case url.endsWith('/users/edit') && method === 'POST':
+                    return updateUser();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -48,6 +50,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             user.id = UUID.v4();
             users.push(user);
+            localStorage.removeItem(usersKey);
+            localStorage.setItem(usersKey, JSON.stringify(users));
+            return ok();
+        }
+
+        function updateUser() {
+            const { user } = body;
+            let findUser = users.find(x => x.id === user.id)
+            if (!findUser) {
+                return error('Username "' + user.username + '" does not existed')
+            }
+            findUser = {...findUser, ...user}
+            const findIndex = users.map((u) => u.id).indexOf(user.id)
+            users.splice(findIndex, 1)
+            users.push(findUser)
             localStorage.removeItem(usersKey);
             localStorage.setItem(usersKey, JSON.stringify(users));
             return ok();
