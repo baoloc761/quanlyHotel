@@ -38,7 +38,7 @@ export class UserEditComponent implements OnInit {
             lastName: [this.user?.lastName || '', Validators.required],
             username: [this.user?.username || '', Validators.required],
             password: [this.user?.password || '', [Validators.required, Validators.minLength(6)]],
-            typeUser: [ this.user?.typeUser || null, Validators.required ]
+            typeUser: [ this.enCodeValue(this.user?.typeUser) || null, Validators.required ]
         });
     }
 
