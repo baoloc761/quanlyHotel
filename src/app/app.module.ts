@@ -21,6 +21,7 @@ import { UsersComponent } from './UsersManagement/users.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserEditComponent } from './UsersManagement/edit/user-edit.component';
+import { PageNotFoundComponent } from './404/404.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { UserEditComponent } from './UsersManagement/edit/user-edit.component';
     RegisterComponent,
     UsersComponent,
     DetailsUsersComponent,
-    UserEditComponent
+    UserEditComponent,
+    PageNotFoundComponent
   ],
   providers: [ 
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

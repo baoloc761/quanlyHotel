@@ -5,6 +5,7 @@ import { AuthGuard } from './_helpers';
 import { RegisterComponent } from './LoginHotel/register.component';
 import { UsersComponent } from './UsersManagement/users.component';
 import { DetailsUsersComponent } from './DetailsUsers/detailsUser.component';
+import { PageNotFoundComponent } from './404/404.component';
 
 export const routes: Routes = [
   { path: '', component: UsersComponent, canActivate: [AuthGuard] },
@@ -16,5 +17,5 @@ export const routes: Routes = [
   { path: 'account/user/:id', component: DetailsUsersComponent, canActivate: [AuthGuard] },
 
   // otherwise redirect to dashboard
-  { path: '**', redirectTo: '' }
+  { path: '**', pathMatch: 'full', component: PageNotFoundComponent }
 ];
