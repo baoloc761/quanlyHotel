@@ -46,3 +46,5 @@ Thumbs.db
 yarn.lock
 .angular/cache/*
 package-lock.json
+/server/BE/PermissionManagement/obj
+/server/BE/PermissionManagement/bin/Debug/net5.0
