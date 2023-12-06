@@ -36,11 +36,12 @@ namespace PermissionManagement
           logger.LogWarning(ex, "An error occurred seeding the DB");
         }
       }
-      using (var scope = host.Services.CreateScope())
-      {
-        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        db.Database.Migrate();
-      }
+      //uncomment for the first time repairing Db
+      //using (var scope = host.Services.CreateScope())
+      //{
+      //  var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+      //  db.Database.Migrate();
+      //}
 
       host.Run();
     }
