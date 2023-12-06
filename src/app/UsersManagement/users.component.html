@@ -31,10 +31,10 @@
                 <td>{{user.lastName}}</td>
                 <td>
                     <span>
-                        <button mat-icon-button (click)="handleUserInfo(user)"><i class="fas fa-info"></i></button>
+                        <button mat-icon-button (click)="handleUserInfo(user)" [disabled]="!canView()"><i class="fas fa-info" [ngClass]="{disabled: !canView()}"></i></button>
                     </span>
                     <span>
-                        <button mat-icon-button (click)="handleEditUser(user)"><i class="fas fa-edit"></i></button>
+                        <button mat-icon-button (click)="handleEditUser(user)" [disabled]="!canEdit()"><i class="fas fa-edit" [ngClass]="{disabled: !canEdit()}"></i></button>
                     </span>
                 </td>
             </tr>

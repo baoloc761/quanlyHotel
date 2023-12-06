@@ -7,6 +7,9 @@
         border: 1px solid #c4c4c4;
         border-radius: 50%;
     }
+    &.disabled {
+      color: #c7c7c7;
+    }
 }
 .fa-info {
     margin-right: 10px;
