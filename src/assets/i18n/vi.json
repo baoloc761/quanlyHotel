@@ -17,6 +17,8 @@
 	"Delete": "Xóa",
 	"Cancel": "Hủy",
 	"Updated": "Cập nhật",
+	"ChooseTypeAccount": "--Chọn loại tài khoản--",
+	"AccountAuthorization": "Phân quyền tài khoản",
 	"Role": "cấp bậc",
 	"Login": "Đăng nhập",
 	"Logout": "Đăng xuất",
@@ -29,7 +31,9 @@
 	"Success": "thành công",
 	"Failed": "thất bại",
 	"Account": "Tài khoản",
+	"Please": "Vui lòng chọn loại tài khoản",
 	"ActionEntityResult": "{{actionName}} {{entityName}} {{result}}",
+	"ActionEntityResultAuthorization": "{{actionName}}",
 	"ActionEntityResultWithReason": "{{actionName}} {{entityName}} {{result}} lý do: {{reson}}",
 	"OK": "OK",
 	"ERROR": "ERROR",
@@ -43,6 +47,11 @@
 			"id": 2,
 			"title": "Quản lý người dùng",
 			"path": "account/users"
+		},
+		"UserAuthorization": {
+			"id": 3,
+			"title": "Phân quyền người dùng",
+			"path": "account/users/Authorization"
 		}
 	},
 	"Validations": {

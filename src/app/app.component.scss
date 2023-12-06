@@ -17,8 +17,7 @@
 
 .welcome-title {
   color: white;
-  font-size: 20pt;
-  text-transform: uppercase;
+  font-size: 10pt;
 }
 
 .nav-link.active {
@@ -28,4 +27,12 @@
   /* animation-iteration-count: 3; */
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-infix{
+  padding: 0 !important;
+}
+
+.row-right{
+  grid-gap: 0 10px;
 }

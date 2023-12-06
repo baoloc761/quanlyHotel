@@ -17,6 +17,8 @@
 	"Delete": "Delete",
 	"Cancel": "Cancel",
 	"Updated": "Updated",
+	"ChooseTypeAccount": "--Choose Type Account--",
+	"AccountAuthorization": "Account Authorization",
 	"Role": "role",
 	"Login": "Login",
 	"Logout": "Logout",
@@ -29,7 +31,9 @@
 	"Success": "success",
 	"Failed": "failed",
 	"Account": "Account",
+	"Please": "Please choose type account",
 	"ActionEntityResult": "{{actionName}} {{entityName}} {{result}}",
+	"ActionEntityResultAuthorization": "{{actionName}}",
 	"ActionEntityResultWithReason": "{{actionName}} {{entityName}} {{result}}, reason: {{reson}}",
 	"OK": "OK",
 	"ERROR": "ERROR",
@@ -43,6 +47,11 @@
 			"id": 2,
 			"title": "Users Management",
 			"path": "account/users"
+		},
+		"UserAuthorization": {
+			"id": 3,
+			"title": "User Authorization",
+			"path": "account/users/Authorization"
 		}
 	},
 	"Validations": {

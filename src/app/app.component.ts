@@ -21,6 +21,11 @@ export class AppComponent {
             id: 2,
             path: '/account/users',
             title: 'Pages.UserManagement.title'
+        },
+        {
+            id: 3,
+            path: '/account/users/Authorization',
+            title: 'Pages.UserAuthorization.title'
         }
     ]
 

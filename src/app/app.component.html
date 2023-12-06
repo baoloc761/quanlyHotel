@@ -4,21 +4,23 @@
         <a *ngFor="let route of routesList" [ngClass]="{active: selectedRoute === route.id}" class="nav-item nav-link" (click)="selectedRoute = route.id" [routerLink]="route.path">{{ route.title | translate }}</a>
         <button class="btn btn-link nav-item nav-link" (click)="logout()">{{ 'Logout' | translate }}</button>
     </div>
-    <div class="info-user">
-        <a class="nav-item nav-link welcome-title">{{'WelcomeUser' | translate : { user: user.username } }}</a>
-    </div>
-    <div class="language-switcher">
-        <mat-form-field  class="form-inline">
-            <mat-select (selectionChange)="switchLanguage()" class="form-control" [(ngModel)]="selectedLang" [ngModelOptions]="{standalone: true}">
-                <mat-select-trigger>
-                    <mat-icon><img class="flag-icon" [src]="getFlagUrl(selectedLang)" /></mat-icon>
-                    <span class="selected-language">{{selectedLang | translate }}</span>
-                </mat-select-trigger>
-               <mat-option *ngFor="let language of translate.getLangs()" [value]="language">
-                <mat-icon><img class="flag-icon" [src]="getFlagUrl(language)" /></mat-icon> {{language | translate }}
-               </mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="row-right d-flex justify-content-right align-items-center">
+        <div class="info-user">
+            <a class="nav-item nav-link welcome-title">{{'WelcomeUser' | translate : { user: user.username } }}</a>
+        </div>
+        <div class="language-switcher pl-2">
+            <mat-form-field  class="form-inline">
+                <mat-select (selectionChange)="switchLanguage()" class="form-control" [(ngModel)]="selectedLang" [ngModelOptions]="{standalone: true}">
+                    <mat-select-trigger>
+                        <mat-icon><img class="flag-icon" [src]="getFlagUrl(selectedLang)" /></mat-icon>
+                        <span class="selected-language">{{selectedLang | translate }}</span>
+                    </mat-select-trigger>
+                   <mat-option *ngFor="let language of translate.getLangs()" [value]="language">
+                    <mat-icon><img class="flag-icon" [src]="getFlagUrl(language)" /></mat-icon> {{language | translate }}
+                   </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
 </nav>
 

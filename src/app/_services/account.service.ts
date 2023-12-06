@@ -60,10 +60,37 @@ export class AccountService {
         u.lastName.toLowerCase().indexOf(keyword?.toLocaleLowerCase()) !== -1)
     }
 
+    getAllUsers() {        
+        const usersKey = 'angular-tutorial-users';
+        const users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
+        return users
+    }
+
     getUserById(id?: string) {        
         const usersKey = 'angular-tutorial-users';
         const users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
         if (_.isEmpty(id)) return Object.assign({}, users[0]);
         return _.find(users, (u) => u.id === id)
+    }
+
+    getListPages() {
+        const listPages = [
+            {
+                id: 1,
+                path: '/home',
+                title: 'Pages.Home.title'
+            },
+            {
+                id: 2,
+                path: '/account/users',
+                title: 'Pages.UserManagement.title'
+            },
+            {
+                id: 3,
+                path: '/account/users/Authorization',
+                title: 'Pages.UserAuthorization.title'
+            }
+        ]
+        return listPages || []
     }
 }

@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserEditComponent } from './UsersManagement/edit/user-edit.component';
 import { PageNotFoundComponent } from './404/404.component';
+import { authorrizationUserComponent } from './UsersManagement/authorizationUser/authorrizationUser.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { PageNotFoundComponent } from './404/404.component';
     UsersComponent,
     DetailsUsersComponent,
     UserEditComponent,
+    authorrizationUserComponent,
     PageNotFoundComponent
   ],
   providers: [ 

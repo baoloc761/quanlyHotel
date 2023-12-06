@@ -6,6 +6,7 @@ import { RegisterComponent } from './LoginHotel/register.component';
 import { UsersComponent } from './UsersManagement/users.component';
 import { DetailsUsersComponent } from './DetailsUsers/detailsUser.component';
 import { PageNotFoundComponent } from './404/404.component';
+import { authorrizationUserComponent } from './UsersManagement/authorizationUser/authorrizationUser.component';
 
 export const routes: Routes = [
   { path: '', component: UsersComponent, canActivate: [AuthGuard] },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'account/register', component: RegisterComponent },
   { path: 'account/users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: 'account/user/:id', component: DetailsUsersComponent, canActivate: [AuthGuard] },
+  { path: 'account/users/Authorization', component: authorrizationUserComponent, canActivate: [AuthGuard] },
 
   // otherwise redirect to dashboard
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent }

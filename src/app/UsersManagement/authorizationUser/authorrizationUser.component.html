@@ -1,0 +1,18 @@
+<form [formGroup]="userForm">
+  <div class="col-md-12">
+    <select formControlName="selectedUser" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+      <ng-container *ngIf="users.length > 0">
+        <option selected *ngFor="let user of users" value={{user.id}}>{{user.username}}</option>
+      </ng-container>
+    </select>
+    <ng-container *ngIf="listPages.length > 0">
+      <div class="form-option-choose">
+        <div *ngFor="let pages of listPages" class="form-check form-switch">
+          <input value={{pages.id}} type="checkbox" class="form-check-input">
+          <label class="form-check-label" for={{pages.id}}>{{pages.title | translate}}</label>
+        </div>
+      </div>
+    </ng-container>
+    <button class="btn btn-primary mt-3" type="button" (click)="handleAuthorizationAccount()">{{'AccountAuthorization' | translate}}</button>
+  </div>
+</form>
