@@ -74,28 +74,32 @@ export class AccountService {
     }
 
     getListPages() {
-        const usersKey = 'angular-get-list-role-page-users'
         const listPages = [
             {
                 id: 1,
+                icon: '',
+                decs: '',
                 path: '/home',
                 title: 'Pages.Home.title',
                 roleUser: []
             },
             {
                 id: 2,
+                icon: '',
+                decs: '',
                 path: '/account/users',
                 title: 'Pages.UserManagement.title',
                 roleUser: []
             },
             {
                 id: 3,
+                icon: '',
+                decs: '',
                 path: '/account/users/Authorization',
                 title: 'Pages.UserAuthorization.title',
                 roleUser: []
             }
         ];
-        localStorage.getItem(usersKey)
         return listPages;
     }
 
