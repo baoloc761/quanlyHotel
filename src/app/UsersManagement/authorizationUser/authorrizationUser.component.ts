@@ -14,7 +14,7 @@ export class authorrizationUserComponent implements OnInit {
   selectedUserId: string = '';
   users: any[] = [];
   listPages: any[] = [];
-  pageIdRole: any[] = [];
+  pageIdRole: { id: string }[] = [];
   pageStates: {[pageId: string]: boolean} = {};
   
   constructor(private snackBar: MatSnackBar, 
@@ -36,36 +36,50 @@ export class authorrizationUserComponent implements OnInit {
     });
   }
 
-  handleCheckboxChange(pageId: any[]) {
+  handleCheckboxChange(pageId: any) {
+    const isChecked = this.pageStates[pageId];
     const formData = this.selectedUserId;
-    const getStringIdPageRole = pageId || ''
-    if(_.isEmpty(formData)) return
-    console.log('getStringIdPageRole', getStringIdPageRole);
-    return this.pageIdRole = getStringIdPageRole || undefined
+    if (_.isEmpty(formData)) return;
+
+    if (isChecked) {
+        const existingItem = this.pageIdRole.find(item => item.id === pageId);
+        if (!existingItem) {
+            this.pageIdRole.push({ id: pageId });
+        }
+    } else {
+        const index = this.pageIdRole.findIndex(item => item.id === pageId);
+        if (index !== -1) {
+            this.pageIdRole.splice(index, 1);
+        }
+    }
+    return this.pageIdRole || [];
   }
 
   handleAuthorizationAccount() {
     const UserId = this.selectedUserId;
-    const checkedPageRole = _.filter(this.pageStates, (x) => x === true) 
-    const isCheckedPageUserRole = this.handleCheckboxChange
-    const msg = this.translate.instant('ActionEntityResultAuthorization', 
-      { actionName: !_.isEmpty(isCheckedPageUserRole) ? this.translate.instant('Please') : this.translate.instant('PleaseChooseOptionPage'), 
-      result:  this.translate.instant(!_.isEmpty(UserId) ? 'Success' : 'Error') })
+    const findpageIdRole = _.filter(this.pageIdRole, x => typeof x === 'object' && 'id' in x);
+    const msg = this.translate.instant('ActionEntityResultAuthorization', {
+      actionName: this.translate.instant('PleaseChooseOptionPage'),
+      result: this.translate.instant(!_.isEmpty(UserId) ? 'Success' : 'Error')
+    })
+  
     if (_.isEmpty(UserId)) {
-      this.openSnackBar(msg, this.translate.instant('Empty'))
-      return
+      this.openSnackBar(msg, this.translate.instant('Empty'));
+      return;
     }
-    if (!isCheckedPageUserRole) {
-      this.openSnackBar(msg, this.translate.instant('Empty'))
-      return
-    }
-    const getUserId = _.filter(this.users, {id: UserId})
-    
     _.forEach(this.listPages, (page) => {
-      if (page.id === this.pageIdRole) {
-        page.roleUser = !checkedPageRole.length ? [] : getUserId;
+      const isPageSelected = findpageIdRole.some(role => role.id === page.id)
+      if (isPageSelected) {
+        if (!page.roleUser.includes(UserId)) {
+          page.roleUser.push(UserId)
+        }
+      } else {
+        const index = page.roleUser.indexOf(UserId)
+        if (index !== -1) {
+          page.roleUser.splice(index, 1)
+        }
       }
-    });
+    })
     console.log('this.listPages', this.listPages)
   }
 }
