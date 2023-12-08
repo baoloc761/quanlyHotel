@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { AccountService } from './_services';
 import { User } from './_models';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,26 +8,10 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     selectedLang: string = '';
     user?: User | null;
-    routesList: any[] = [
-        {
-            id: 1,
-            path: '/home',
-            title: 'Pages.Home.title'
-        },
-        {
-            id: 2,
-            path: '/account/users',
-            title: 'Pages.UserManagement.title'
-        },
-        {
-            id: 3,
-            path: '/account/users/Authorization',
-            title: 'Pages.UserAuthorization.title'
-        }
-    ]
+    routesList: any[] = []
 
     selectedRoute: number = 1
 
@@ -44,6 +28,12 @@ export class AppComponent {
         translate.use(currentLanguage)
         this.selectedLang = currentLanguage
     }
+
+    ngOnInit() {
+        this.routesList = this.accountService.getListPages()
+        console.log('this.routesList', this.routesList)
+        
+      }
 
     switchLanguage() {
         this.translate.use(this.selectedLang)

@@ -57,7 +57,8 @@ export class authorrizationUserComponent implements OnInit {
 
   handleAuthorizationAccount() {
     const UserId = this.selectedUserId;
-    const findpageIdRole = _.filter(this.pageIdRole, x => typeof x === 'object' && 'id' in x);
+    const findpageIdRole = _.filter(this.pageIdRole, x => typeof x === 'object' && 'id' in x)
+    const getListPage = this.listPages
     const msg = this.translate.instant('ActionEntityResultAuthorization', {
       actionName: this.translate.instant('PleaseChooseOptionPage'),
       result: this.translate.instant(!_.isEmpty(UserId) ? 'Success' : 'Error')
@@ -67,7 +68,7 @@ export class authorrizationUserComponent implements OnInit {
       this.openSnackBar(msg, this.translate.instant('Empty'));
       return;
     }
-    _.forEach(this.listPages, (page) => {
+    _.forEach(getListPage, (page) => {
       const isPageSelected = findpageIdRole.some(role => role.id === page.id)
       if (isPageSelected) {
         if (!page.roleUser.includes(UserId)) {
@@ -80,6 +81,6 @@ export class authorrizationUserComponent implements OnInit {
         }
       }
     })
-    console.log('this.listPages', this.listPages)
+    this.accountService.auThorrizationUser(getListPage)
   }
 }

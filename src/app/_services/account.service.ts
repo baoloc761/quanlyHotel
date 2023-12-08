@@ -74,7 +74,7 @@ export class AccountService {
     }
 
     getListPages() {
-        const usersKey = 'angular-list-role-page-users';
+        const usersKey = 'angular-get-list-role-page-users'
         const listPages = [
             {
                 id: 1,
@@ -95,9 +95,14 @@ export class AccountService {
                 roleUser: []
             }
         ];
-
-        // const listPagesJSON = JSON.stringify(listPages);
-        // localStorage.setItem(usersKey, listPagesJSON);
+        localStorage.getItem(usersKey)
         return listPages;
+    }
+
+    auThorrizationUser(getListPage: any) {
+        const usersKey = 'angular-list-role-page-users'
+        const listPagesJSON = JSON.stringify(getListPage)
+        localStorage.setItem(usersKey, listPagesJSON)
+        return getListPage || []
     }
 }
