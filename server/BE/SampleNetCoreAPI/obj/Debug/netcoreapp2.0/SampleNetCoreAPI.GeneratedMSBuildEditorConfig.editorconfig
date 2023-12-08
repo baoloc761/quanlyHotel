@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = SampleNetCoreAPI
+build_property.ProjectDir = C:\Projects\Source\DevTeam\quanlyHotel\server\BE\SampleNetCoreAPI\
