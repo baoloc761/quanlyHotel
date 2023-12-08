@@ -5,6 +5,13 @@ export class User {
     firstName?: string;
     lastName?: string;
     typeUser?: { id: number, name: string, isAdmin: boolean };
-    claims?: { pageId: string, canList: boolean, canEdit: boolean, canDelete: boolean, canView: boolean }[];
+    claims?: { 
+        pageId: string,
+        namePages: string, 
+        canList: boolean, 
+        canEdit: boolean, 
+        canDelete: boolean, 
+        canView: boolean, 
+        canViewNamePage: boolean }[];
     token?: string;
 }

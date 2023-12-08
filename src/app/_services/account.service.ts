@@ -74,23 +74,30 @@ export class AccountService {
     }
 
     getListPages() {
+        const usersKey = 'angular-list-role-page-users';
         const listPages = [
             {
                 id: 1,
                 path: '/home',
-                title: 'Pages.Home.title'
+                title: 'Pages.Home.title',
+                roleUser: []
             },
             {
                 id: 2,
                 path: '/account/users',
-                title: 'Pages.UserManagement.title'
+                title: 'Pages.UserManagement.title',
+                roleUser: []
             },
             {
                 id: 3,
                 path: '/account/users/Authorization',
-                title: 'Pages.UserAuthorization.title'
+                title: 'Pages.UserAuthorization.title',
+                roleUser: []
             }
-        ]
-        return listPages || []
+        ];
+
+        // const listPagesJSON = JSON.stringify(listPages);
+        // localStorage.setItem(usersKey, listPagesJSON);
+        return listPages;
     }
 }

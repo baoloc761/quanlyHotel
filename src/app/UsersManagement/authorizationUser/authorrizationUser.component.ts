@@ -14,6 +14,7 @@ export class authorrizationUserComponent implements OnInit {
   selectedUserId: string = '';
   users: any[] = [];
   listPages: any[] = [];
+  pageIdRole: any[] = [];
   pageStates: {[pageId: string]: boolean} = {};
   
   constructor(private snackBar: MatSnackBar, 
@@ -25,8 +26,8 @@ export class authorrizationUserComponent implements OnInit {
     this.users = this.accountService.getAllUsers();
     this.listPages = this.accountService.getListPages();
     this.listPages.forEach(page => {
-      this.pageStates[page.id] = false;
-    });
+      this.pageStates[page.id] = false
+    })
   }
 
   openSnackBar(message: string, action: string) {
@@ -35,20 +36,22 @@ export class authorrizationUserComponent implements OnInit {
     });
   }
 
-  handleCheckboxChange() {
+  handleCheckboxChange(pageId: any[]) {
     const formData = this.selectedUserId;
-    const isCheckedPage = _.some(this.pageStates, value => value === true)
+    const getStringIdPageRole = pageId || ''
     if(_.isEmpty(formData)) return
-    return isCheckedPage || undefined
+    console.log('getStringIdPageRole', getStringIdPageRole);
+    return this.pageIdRole = getStringIdPageRole || undefined
   }
 
   handleAuthorizationAccount() {
-    const formData = this.selectedUserId;
-    const isCheckedPageUserRole = this.handleCheckboxChange()
+    const UserId = this.selectedUserId;
+    const checkedPageRole = Object.values(this.pageStates).some(value => value === true)
+    const isCheckedPageUserRole = this.handleCheckboxChange
     const msg = this.translate.instant('ActionEntityResultAuthorization', 
-      { actionName: !_.isNil(isCheckedPageUserRole) ? this.translate.instant('Please') : this.translate.instant('PleaseChooseOptionPage'), 
-      result:  this.translate.instant(!_.isEmpty(formData) ? 'Success' : 'Error') })
-    if (_.isEmpty(formData)) {
+      { actionName: !_.isEmpty(isCheckedPageUserRole) ? this.translate.instant('Please') : this.translate.instant('PleaseChooseOptionPage'), 
+      result:  this.translate.instant(!_.isEmpty(UserId) ? 'Success' : 'Error') })
+    if (_.isEmpty(UserId)) {
       this.openSnackBar(msg, this.translate.instant('Empty'))
       return
     }
@@ -56,6 +59,14 @@ export class authorrizationUserComponent implements OnInit {
       this.openSnackBar(msg, this.translate.instant('Empty'))
       return
     }
-    console.log(this.listPages);
+    const getUserId = _.filter(this.users, {id: UserId})
+    const getPageRole = _.filter(this.listPages, (page) => page.id === this.pageIdRole)
+    const addUserIntoPageRole = _.forEach(this.listPages, (page) => {
+      page.roleUser = _.isEqual(page.id, this.pageIdRole) 
+        ? getUserId 
+        : (checkedPageRole ? page.roleUser : page.roleUser = [])
+
+    })
+    console.log(checkedPageRole)
   }
 }

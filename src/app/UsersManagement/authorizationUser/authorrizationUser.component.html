@@ -7,7 +7,7 @@
   <ng-container *ngIf="listPages.length > 0">
     <div class="form-option-choose">
       <div *ngFor="let page of listPages" class="form-check form-switch">
-        <input (change)="handleCheckboxChange()" [(ngModel)]="pageStates[page.id]" type="checkbox" class="form-check-input" [id]="page.id">
+        <input (change)="handleCheckboxChange(page.id)" [(ngModel)]="pageStates[page.id]" type="checkbox" class="form-check-input" [id]="page.id">
         <label class="form-check-label" for="{{page.id}}">{{page.title | translate}}</label>
       </div>
     </div>
