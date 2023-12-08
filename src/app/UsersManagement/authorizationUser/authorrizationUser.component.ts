@@ -46,7 +46,7 @@ export class authorrizationUserComponent implements OnInit {
 
   handleAuthorizationAccount() {
     const UserId = this.selectedUserId;
-    const checkedPageRole = Object.values(this.pageStates).some(value => value === true)
+    const checkedPageRole = this.pageStates
     const isCheckedPageUserRole = this.handleCheckboxChange
     const msg = this.translate.instant('ActionEntityResultAuthorization', 
       { actionName: !_.isEmpty(isCheckedPageUserRole) ? this.translate.instant('Please') : this.translate.instant('PleaseChooseOptionPage'), 
@@ -60,13 +60,11 @@ export class authorrizationUserComponent implements OnInit {
       return
     }
     const getUserId = _.filter(this.users, {id: UserId})
-    const getPageRole = _.filter(this.listPages, (page) => page.id === this.pageIdRole)
     const addUserIntoPageRole = _.forEach(this.listPages, (page) => {
-      page.roleUser = _.isEqual(page.id, this.pageIdRole) 
-        ? getUserId 
-        : (checkedPageRole ? page.roleUser : page.roleUser = [])
-
+      if (page.id === this.pageIdRole) {
+        page.roleUser = getUserId
+      }
     })
-    console.log(checkedPageRole)
+    console.log(addUserIntoPageRole, checkedPageRole)
   }
 }
