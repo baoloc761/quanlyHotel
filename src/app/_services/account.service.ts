@@ -77,20 +77,36 @@ export class AccountService {
         const listPages = [
             {
                 id: 1,
+                icon: '',
+                decs: '',
                 path: '/home',
-                title: 'Pages.Home.title'
+                title: 'Pages.Home.title',
+                roleUser: []
             },
             {
                 id: 2,
+                icon: '',
+                decs: '',
                 path: '/account/users',
-                title: 'Pages.UserManagement.title'
+                title: 'Pages.UserManagement.title',
+                roleUser: []
             },
             {
                 id: 3,
+                icon: '',
+                decs: '',
                 path: '/account/users/Authorization',
-                title: 'Pages.UserAuthorization.title'
+                title: 'Pages.UserAuthorization.title',
+                roleUser: []
             }
-        ]
-        return listPages || []
+        ];
+        return listPages;
+    }
+
+    auThorrizationUser(getListPage: any) {
+        const usersKey = 'angular-list-role-page-users'
+        const listPagesJSON = JSON.stringify(getListPage)
+        localStorage.setItem(usersKey, listPagesJSON)
+        return getListPage || []
     }
 }
