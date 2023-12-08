@@ -32,6 +32,7 @@
 	"Failed": "failed",
 	"Account": "Account",
 	"Please": "Please choose type account",
+	"PleaseChooseOptionPage": "Please choose option page",
 	"ActionEntityResult": "{{actionName}} {{entityName}} {{result}}",
 	"ActionEntityResultAuthorization": "{{actionName}}",
 	"ActionEntityResultWithReason": "{{actionName}} {{entityName}} {{result}}, reason: {{reson}}",

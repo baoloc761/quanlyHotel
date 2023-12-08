@@ -32,6 +32,7 @@
 	"Failed": "thất bại",
 	"Account": "Tài khoản",
 	"Please": "Vui lòng chọn loại tài khoản",
+	"PleaseChooseOptionPage": "Vui lòng chọn page phân quyền user",
 	"ActionEntityResult": "{{actionName}} {{entityName}} {{result}}",
 	"ActionEntityResultAuthorization": "{{actionName}}",
 	"ActionEntityResultWithReason": "{{actionName}} {{entityName}} {{result}} lý do: {{reson}}",

@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./authorrizationUser.component.scss']
 })
 export class authorrizationUserComponent implements OnInit {
-  userForm!: FormGroup;
+  selectedUserId: string = '';
   users: any[] = [];
   listPages: any[] = [];
   pageStates: {[pageId: string]: boolean} = {};
@@ -19,15 +19,14 @@ export class authorrizationUserComponent implements OnInit {
   constructor(private snackBar: MatSnackBar, 
     private accountService: AccountService, 
     private route: ActivatedRoute,
-    private translate: TranslateService) {
-      this.userForm = new FormGroup({
-        selectedUser: new FormControl()
-     });
-    }
+    private translate: TranslateService) {}
 
   ngOnInit() {
-    this.users = this.accountService.getAllUsers()
-    this.listPages = this.accountService.getListPages()
+    this.users = this.accountService.getAllUsers();
+    this.listPages = this.accountService.getListPages();
+    this.listPages.forEach(page => {
+      this.pageStates[page.id] = false;
+    });
   }
 
   openSnackBar(message: string, action: string) {
@@ -36,16 +35,27 @@ export class authorrizationUserComponent implements OnInit {
     });
   }
 
+  handleCheckboxChange() {
+    const formData = this.selectedUserId;
+    const isCheckedPage = _.some(this.pageStates, value => value === true)
+    if(_.isEmpty(formData)) return
+    return isCheckedPage || undefined
+  }
+
   handleAuthorizationAccount() {
-    const formData = this.userForm.value;
+    const formData = this.selectedUserId;
+    const isCheckedPageUserRole = this.handleCheckboxChange()
     const msg = this.translate.instant('ActionEntityResultAuthorization', 
-      { actionName: this.translate.instant('Please'), 
-      result:  this.translate.instant(!_.isEmpty(formData.selectedUser) ? 'Success' : 'Error') })
-    if (_.isEmpty(formData.selectedUser)) {
+      { actionName: !_.isNil(isCheckedPageUserRole) ? this.translate.instant('Please') : this.translate.instant('PleaseChooseOptionPage'), 
+      result:  this.translate.instant(!_.isEmpty(formData) ? 'Success' : 'Error') })
+    if (_.isEmpty(formData)) {
       this.openSnackBar(msg, this.translate.instant('Empty'))
       return
     }
-
+    if (!isCheckedPageUserRole) {
+      this.openSnackBar(msg, this.translate.instant('Empty'))
+      return
+    }
     console.log(this.listPages);
   }
 }
