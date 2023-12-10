@@ -1,9 +1,12 @@
-﻿namespace DataAccess.Model
+using Common;
+using System;
+
+namespace DataAccess.Model
 {
   public class UserTypeUser : BaseEntity
   {
-    public int UserId { get; set; }
-    public int UserTypeId { get; set; }
+    public Guid UserId { get; set; }
+    public Guid UserTypeId { get; set; }
 
     public virtual User User { get; set; }
 

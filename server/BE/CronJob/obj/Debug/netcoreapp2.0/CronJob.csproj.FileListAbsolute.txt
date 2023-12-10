@@ -1,0 +1,10 @@
+C:\quanlyHotel\server\BE\CronJob\bin\Debug\netcoreapp2.0\CronJob.deps.json
+C:\quanlyHotel\server\BE\CronJob\bin\Debug\netcoreapp2.0\CronJob.dll
+C:\quanlyHotel\server\BE\CronJob\bin\Debug\netcoreapp2.0\CronJob.pdb
+C:\quanlyHotel\server\BE\CronJob\obj\Debug\netcoreapp2.0\CronJob.csproj.AssemblyReference.cache
+C:\quanlyHotel\server\BE\CronJob\obj\Debug\netcoreapp2.0\CronJob.GeneratedMSBuildEditorConfig.editorconfig
+C:\quanlyHotel\server\BE\CronJob\obj\Debug\netcoreapp2.0\CronJob.AssemblyInfoInputs.cache
+C:\quanlyHotel\server\BE\CronJob\obj\Debug\netcoreapp2.0\CronJob.AssemblyInfo.cs
+C:\quanlyHotel\server\BE\CronJob\obj\Debug\netcoreapp2.0\CronJob.csproj.CoreCompileInputs.cache
+C:\quanlyHotel\server\BE\CronJob\obj\Debug\netcoreapp2.0\CronJob.dll
+C:\quanlyHotel\server\BE\CronJob\obj\Debug\netcoreapp2.0\CronJob.pdb

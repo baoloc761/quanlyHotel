@@ -1,4 +1,4 @@
-﻿using Common;
+using Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -23,13 +23,18 @@ namespace Security
     public string RenderAccessToken(current_user_access access_user)
     {
       var audience = _configuration["TokenAuthentication:siteUrl"];
+      var secretKey = new SymmetricSecurityKey
+          (Encoding.UTF8.GetBytes("thisisasecretkey@123"));
+
+      var signinCredentials = new SigningCredentials
+         (secretKey, SecurityAlgorithms.HmacSha256);
 
       var jwtToken = new JwtSecurityToken(
           issuer: audience,
           audience: audience,
           claims: GetTokenClaims(access_user),
           expires: access_user.ExpireTime,
-          signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constant.SecretSercurityKey)), SecurityAlgorithms.HmacSha256)
+          signingCredentials: signinCredentials
       );
 
       return new JwtSecurityTokenHandler().WriteToken(jwtToken);
@@ -63,7 +68,7 @@ namespace Security
       return new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, access_user.Email),
+                new Claim(JwtRegisteredClaimNames.Email, access_user.UserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Typ, string.Join(",",access_user.UserType)),
                 new Claim(JwtRegisteredClaimNames.GivenName, access_user.UserName),
                 new Claim(JwtRegisteredClaimNames.Exp, access_user.ExpireTime.ToShortDateString())

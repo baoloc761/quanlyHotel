@@ -57,7 +57,7 @@ export class authorrizationUserComponent implements OnInit {
 
   handleAuthorizationAccount() {
     const UserId = this.selectedUserId;
-    const findpageIdRole = _.filter(this.pageIdRole, x => typeof x === 'object' && 'id' in x)
+    const findpageIdRole = _.filter(this.pageIdRole, x => typeof _.isEqual(x, 'object') && 'id' in x)
     const getListPage = this.listPages
     const msg = this.translate.instant('ActionEntityResultAuthorization', {
       actionName: this.translate.instant('PleaseChooseOptionPage'),

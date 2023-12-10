@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = CronJob
+build_property.ProjectDir = C:\quanlyHotel\server\BE\CronJob\

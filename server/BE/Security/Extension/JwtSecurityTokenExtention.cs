@@ -1,3 +1,4 @@
+using System;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace Security.Extension
@@ -6,7 +7,17 @@ namespace Security.Extension
   {
     public static string GetClaimValue(this JwtSecurityToken jwtSecurityToken, string claim_name)
     {
-      return jwtSecurityToken.Payload[claim_name].ToString();
+      if (jwtSecurityToken == null)
+      {
+        throw new ArgumentNullException(nameof(jwtSecurityToken));
+      }
+      try
+      {
+        return jwtSecurityToken?.Payload[claim_name]?.ToString() ?? "";
+      } catch (Exception ex)
+      {
+        throw ex;
+      }
     }
   }
 }

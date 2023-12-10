@@ -10,6 +10,13 @@ using Microsoft.AspNetCore.Authorization;
 using Security;
 using BusinessAccess.Services.Interface;
 using System.Threading.Tasks;
+using Security.SecurityModel;
+using System.Linq;
+using Common;
+using Security.AuthozirationAttributes;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics.Tracing;
 
 namespace SampleNetCoreAPI.Controllers
 {
@@ -18,19 +25,24 @@ namespace SampleNetCoreAPI.Controllers
   public class LoginController : Controller
   {
     private readonly IUserService _userService;
+    private readonly IAuthozirationUtility _securityUtility;
 
-    public LoginController(IUserService userService)
+    public LoginController(IUserService userService, IAuthozirationUtility securityUtility)
     {
       _userService = userService;
+      _securityUtility = securityUtility;
     }
 
     [HttpGet, Route("menus-list")]
-    [AllowAnonymous]
     public async Task<IActionResult> GetMenuList()
     {
+      StringValues tokenString = "";
+      Request.Headers.TryGetValue("Authorization", out tokenString);
+      var token = new JwtSecurityToken(jwtEncodedString: tokenString.First().Replace("Bearer ", ""));
+      var userId = token?.Payload["email"]?.ToString() ?? "";
       try
       {
-        var menusList = await _userService.GetListMenu();
+        var menusList = await _userService.GetListMenu(new Guid(userId));
         return Ok(new
         {
           status = 200,
@@ -48,6 +60,29 @@ namespace SampleNetCoreAPI.Controllers
       }
     }
 
+    [HttpGet, Route("users-list")]
+    public async Task<IActionResult> GetUsersList([FromQuery] string keyword = "")
+    {
+      try
+      {
+        var users = await _userService.GetAllUsers(keyword);
+        return Ok(new
+        {
+          status = 200,
+          message = "GetUsersListSuccess",
+          data = users
+        });
+      }
+      catch (Exception ex)
+      {
+        return Ok(new
+        {
+          status = 404,
+          message = "GetUsersListFailed"
+        });
+      }
+    }
+
     [HttpPost, Route("login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginDTO loginDTO)
@@ -61,26 +96,19 @@ namespace SampleNetCoreAPI.Controllers
         var checkLogin = await _userService.CheckLogin(loginDTO.UserName, loginDTO.Password);
         if (checkLogin.Item1)
         {
-          var secretKey = new SymmetricSecurityKey
-          (Encoding.UTF8.GetBytes("thisisasecretkey@123"));
-          var signinCredentials = new SigningCredentials
-          (secretKey, SecurityAlgorithms.HmacSha256);
-          var jwtSecurityToken = new JwtSecurityToken(
-              issuer: loginDTO.UserName,
-              audience: "http://localhost:59688",
-              claims: new List<Claim>(),
-              expires: DateTime.Now.AddDays(1),
-              signingCredentials: signinCredentials
-          );
           var basicUserInfo = checkLogin.Item4;
-          return Ok(new
+          var AccessToken = _securityUtility.RenderAccessToken(new current_user_access()
           {
-            status = 200,
-            message = checkLogin.Item2,
-            userInfo = basicUserInfo,
-            token = new JwtSecurityTokenHandler().
-          WriteToken(jwtSecurityToken)
+            Email = basicUserInfo.Email,
+            ExpireTime = DateTime.Now.AddDays(1),
+            UserName = basicUserInfo.UserName,
+            UserType = basicUserInfo.UserTypeUser.FirstOrDefault().UserType?.Type ?? (int)UserTypeEnum.Staff,
+            UserTypeName = basicUserInfo.UserTypeUser.FirstOrDefault().UserType?.UserTypeName ?? string.Empty,
+            UserId = basicUserInfo.Id,
+            PermissionList = basicUserInfo.PermissionList
           });
+          var result = Json(AccessToken);
+          return result;
         }
 
         return Ok(new

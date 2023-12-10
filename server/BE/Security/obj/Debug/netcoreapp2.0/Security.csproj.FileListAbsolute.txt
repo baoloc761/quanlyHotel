@@ -1,0 +1,15 @@
+C:\quanlyHotel\server\BE\Security\bin\Debug\netcoreapp2.0\Security.deps.json
+C:\quanlyHotel\server\BE\Security\bin\Debug\netcoreapp2.0\Security.dll
+C:\quanlyHotel\server\BE\Security\bin\Debug\netcoreapp2.0\Security.pdb
+C:\quanlyHotel\server\BE\Security\bin\Debug\netcoreapp2.0\Common.dll
+C:\quanlyHotel\server\BE\Security\bin\Debug\netcoreapp2.0\JWT.dll
+C:\quanlyHotel\server\BE\Security\bin\Debug\netcoreapp2.0\Common.pdb
+C:\quanlyHotel\server\BE\Security\bin\Debug\netcoreapp2.0\JWT.pdb
+C:\quanlyHotel\server\BE\Security\obj\Debug\netcoreapp2.0\Security.csproj.AssemblyReference.cache
+C:\quanlyHotel\server\BE\Security\obj\Debug\netcoreapp2.0\Security.GeneratedMSBuildEditorConfig.editorconfig
+C:\quanlyHotel\server\BE\Security\obj\Debug\netcoreapp2.0\Security.AssemblyInfoInputs.cache
+C:\quanlyHotel\server\BE\Security\obj\Debug\netcoreapp2.0\Security.AssemblyInfo.cs
+C:\quanlyHotel\server\BE\Security\obj\Debug\netcoreapp2.0\Security.csproj.CoreCompileInputs.cache
+C:\quanlyHotel\server\BE\Security\obj\Debug\netcoreapp2.0\Security.csproj.CopyComplete
+C:\quanlyHotel\server\BE\Security\obj\Debug\netcoreapp2.0\Security.dll
+C:\quanlyHotel\server\BE\Security\obj\Debug\netcoreapp2.0\Security.pdb

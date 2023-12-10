@@ -1,4 +1,4 @@
-﻿using JWT;
+using JWT;
 using Newtonsoft.Json.Linq;
 using System;
 

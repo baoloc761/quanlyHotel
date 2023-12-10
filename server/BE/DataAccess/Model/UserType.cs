@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace DataAccess.Model
 {
@@ -9,6 +9,7 @@ namespace DataAccess.Model
       UserTypeUser = new HashSet<UserTypeUser>();
     }
 
+    public int Type { get; set; }
     public string UserTypeName { get; set; }
     public string Description { get; set; }
 

@@ -12,6 +12,9 @@ namespace DataAccess.Model
     public BaseEntity()
     {
       Id = GuidComb.Generate();
+      CreatedTime= DateTime.UtcNow;
+      UpdatedTime= DateTime.UtcNow;
+      Active = true;
     }
   }
 }

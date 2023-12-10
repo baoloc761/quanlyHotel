@@ -13,6 +13,5 @@ namespace DataAccess.Model
     {
       Active = true;
     }
-
   }
 }

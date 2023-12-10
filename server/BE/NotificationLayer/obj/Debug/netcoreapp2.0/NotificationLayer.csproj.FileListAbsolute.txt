@@ -1,0 +1,15 @@
+C:\quanlyHotel\server\BE\NotificationLayer\bin\Debug\netcoreapp2.0\NotificationLayer.deps.json
+C:\quanlyHotel\server\BE\NotificationLayer\bin\Debug\netcoreapp2.0\NotificationLayer.dll
+C:\quanlyHotel\server\BE\NotificationLayer\bin\Debug\netcoreapp2.0\NotificationLayer.pdb
+C:\quanlyHotel\server\BE\NotificationLayer\bin\Debug\netcoreapp2.0\Common.dll
+C:\quanlyHotel\server\BE\NotificationLayer\bin\Debug\netcoreapp2.0\JWT.dll
+C:\quanlyHotel\server\BE\NotificationLayer\bin\Debug\netcoreapp2.0\Common.pdb
+C:\quanlyHotel\server\BE\NotificationLayer\bin\Debug\netcoreapp2.0\JWT.pdb
+C:\quanlyHotel\server\BE\NotificationLayer\obj\Debug\netcoreapp2.0\NotificationLayer.csproj.AssemblyReference.cache
+C:\quanlyHotel\server\BE\NotificationLayer\obj\Debug\netcoreapp2.0\NotificationLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\quanlyHotel\server\BE\NotificationLayer\obj\Debug\netcoreapp2.0\NotificationLayer.AssemblyInfoInputs.cache
+C:\quanlyHotel\server\BE\NotificationLayer\obj\Debug\netcoreapp2.0\NotificationLayer.AssemblyInfo.cs
+C:\quanlyHotel\server\BE\NotificationLayer\obj\Debug\netcoreapp2.0\NotificationLayer.csproj.CoreCompileInputs.cache
+C:\quanlyHotel\server\BE\NotificationLayer\obj\Debug\netcoreapp2.0\NotificationLayer.csproj.CopyComplete
+C:\quanlyHotel\server\BE\NotificationLayer\obj\Debug\netcoreapp2.0\NotificationLayer.dll
+C:\quanlyHotel\server\BE\NotificationLayer\obj\Debug\netcoreapp2.0\NotificationLayer.pdb

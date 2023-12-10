@@ -11,6 +11,9 @@ namespace DataAccess.DBContext
 
     public virtual DbSet<Menu> Menus { get; set; }
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserType> UserTypes { get; set; }
+    public virtual DbSet<UserTypeUser> UserTypeUsers { get; set; }
+    public virtual DbSet<UsersMenusPermission> UsersMenusPermissions { get; set; }
     public virtual DbSet<Blog> Blogs { get; set; }
     public virtual DbSet<Post> Posts { get; set; }
     public virtual DbSet<HotelManagementCoreConfig> HotelManagementCoreConfig { get; set; }
@@ -29,9 +32,31 @@ namespace DataAccess.DBContext
         entity.Property(e => e.Id).HasColumnType("UNIQUEIDENTIFIER");
       });
 
+      modelBuilder.Entity<UserType>(entity =>
+      {
+        entity.ToTable("user_types");
+
+        entity.Property(e => e.Id).HasColumnType("UNIQUEIDENTIFIER");
+      });
+
+      modelBuilder.Entity<UserTypeUser>(entity =>
+      {
+        entity.ToTable("user_type_users");
+
+        entity.Property(e => e.Id).HasColumnType("UNIQUEIDENTIFIER");
+      });
+      
+
       modelBuilder.Entity<Menu>(entity =>
       {
         entity.ToTable("menus");
+
+        entity.Property(e => e.Id).HasColumnType("UNIQUEIDENTIFIER");
+      });
+
+      modelBuilder.Entity<UsersMenusPermission>(entity =>
+      {
+        entity.ToTable("users_menus_permissions");
 
         entity.Property(e => e.Id).HasColumnType("UNIQUEIDENTIFIER");
       });

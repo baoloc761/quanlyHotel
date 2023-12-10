@@ -1,4 +1,4 @@
-﻿using DataAccess.DBContext;
+using DataAccess.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;

@@ -1,0 +1,17 @@
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\BusinessAccess.deps.json
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\BusinessAccess.dll
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\BusinessAccess.pdb
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\Common.dll
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\DataAccess.dll
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\JWT.dll
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\DataAccess.pdb
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\Common.pdb
+C:\quanlyHotel\server\BE\BusinessAccess\bin\Debug\netcoreapp2.0\JWT.pdb
+C:\quanlyHotel\server\BE\BusinessAccess\obj\Debug\netcoreapp2.0\BusinessAccess.csproj.AssemblyReference.cache
+C:\quanlyHotel\server\BE\BusinessAccess\obj\Debug\netcoreapp2.0\BusinessAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\quanlyHotel\server\BE\BusinessAccess\obj\Debug\netcoreapp2.0\BusinessAccess.AssemblyInfoInputs.cache
+C:\quanlyHotel\server\BE\BusinessAccess\obj\Debug\netcoreapp2.0\BusinessAccess.AssemblyInfo.cs
+C:\quanlyHotel\server\BE\BusinessAccess\obj\Debug\netcoreapp2.0\BusinessAccess.csproj.CoreCompileInputs.cache
+C:\quanlyHotel\server\BE\BusinessAccess\obj\Debug\netcoreapp2.0\BusinessAccess.csproj.CopyComplete
+C:\quanlyHotel\server\BE\BusinessAccess\obj\Debug\netcoreapp2.0\BusinessAccess.dll
+C:\quanlyHotel\server\BE\BusinessAccess\obj\Debug\netcoreapp2.0\BusinessAccess.pdb

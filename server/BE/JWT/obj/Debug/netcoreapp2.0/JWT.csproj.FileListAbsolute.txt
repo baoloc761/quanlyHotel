@@ -1,0 +1,10 @@
+C:\quanlyHotel\server\BE\JWT\bin\Debug\netcoreapp2.0\JWT.deps.json
+C:\quanlyHotel\server\BE\JWT\bin\Debug\netcoreapp2.0\JWT.dll
+C:\quanlyHotel\server\BE\JWT\bin\Debug\netcoreapp2.0\JWT.pdb
+C:\quanlyHotel\server\BE\JWT\obj\Debug\netcoreapp2.0\JWT.csproj.AssemblyReference.cache
+C:\quanlyHotel\server\BE\JWT\obj\Debug\netcoreapp2.0\JWT.GeneratedMSBuildEditorConfig.editorconfig
+C:\quanlyHotel\server\BE\JWT\obj\Debug\netcoreapp2.0\JWT.AssemblyInfoInputs.cache
+C:\quanlyHotel\server\BE\JWT\obj\Debug\netcoreapp2.0\JWT.AssemblyInfo.cs
+C:\quanlyHotel\server\BE\JWT\obj\Debug\netcoreapp2.0\JWT.csproj.CoreCompileInputs.cache
+C:\quanlyHotel\server\BE\JWT\obj\Debug\netcoreapp2.0\JWT.dll
+C:\quanlyHotel\server\BE\JWT\obj\Debug\netcoreapp2.0\JWT.pdb

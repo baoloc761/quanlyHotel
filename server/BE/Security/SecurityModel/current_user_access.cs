@@ -8,7 +8,13 @@ namespace Security.SecurityModel
     public Guid UserId { get; set; }
     public string Email { get; set; }
     public string UserName { get; set; }
-    public List<string> UserType { get; set; }
+    public int UserType { get; set; }
+    public string UserTypeName { get; set; }
+    public List<Dictionary<string, object>> PermissionList { get; set; }
     public DateTime ExpireTime { get; set; }
+    public current_user_access()
+    {
+      PermissionList= new List<Dictionary<string, object>>();
+    }
   }
 }

@@ -5,10 +5,6 @@ namespace DataAccess.Model
 {
   public class User : BaseEntity
   {
-    public User()
-    {
-      UserTypeUser = new HashSet<UserTypeUser>();
-    }
     [Required]
     public string UserName { get; set; }
     public string Email { get; set; }
@@ -17,5 +13,9 @@ namespace DataAccess.Model
     public string Password { get; set; }
 
     public virtual ICollection<UserTypeUser> UserTypeUser { get; set; }
+    public User()
+    {
+      UserTypeUser = new HashSet<UserTypeUser>();
+    }
   }
 }
