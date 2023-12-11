@@ -5,14 +5,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { User } from '@app/_models';
+import { RoleDTO, User } from '@app/_models';
 
 // array in local storage for registered users
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
-    private userSubject: BehaviorSubject<User | null>;
-    public user: Observable<User | null>;
+    private userSubject: BehaviorSubject<any | null>;
+    public user: Observable<any | null>;
+    public userApiUrl: string = `${environment.apiUrl}Login/`;
 
     constructor(
         private router: Router,
@@ -51,28 +52,6 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}/users/edit`, {user});
     }
 
-    getUsers(keyword?: string) {        
-        const usersKey = 'angular-tutorial-users';
-        const users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
-        if (_.isEmpty(keyword)) return Object.assign([], users);
-        return _.filter(users, (u) => u.username.toLowerCase().indexOf(keyword?.toLocaleLowerCase()) !== -1 ||
-        u.firstName.toLowerCase().indexOf(keyword?.toLocaleLowerCase()) !== -1 ||
-        u.lastName.toLowerCase().indexOf(keyword?.toLocaleLowerCase()) !== -1)
-    }
-
-    getAllUsers() {        
-        const usersKey = 'angular-tutorial-users';
-        const users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
-        return users
-    }
-
-    getUserById(id?: string) {        
-        const usersKey = 'angular-tutorial-users';
-        const users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
-        if (_.isEmpty(id)) return Object.assign({}, users[0]);
-        return _.find(users, (u) => u.id === id)
-    }
-
     getListPages() {
         const listPages = [
             {
@@ -108,5 +87,48 @@ export class AccountService {
         const listPagesJSON = JSON.stringify(getListPage)
         localStorage.setItem(usersKey, listPagesJSON)
         return getListPage || []
+    }
+
+    getRolesList() {
+       return this.http.get(`${this.userApiUrl}roles-list`)
+       .pipe(map((res: any) => {
+            return res.data || [];
+        }));
+    }
+
+    getMenusList() {
+        return this.http.get(`${this.userApiUrl}menus-list`)
+        .pipe(map((res: any) => {
+            return res.data || [];
+        }));
+    }
+
+    getUsers(keyword?: string) {
+        return this.http.get(`${this.userApiUrl}users-list${keyword ? ('?keyword=' +  keyword) : ''}`)
+        .pipe(map((res: any) => {
+            return res.data || [];
+        }));
+    }
+
+    getUserLoginDetail() {
+        return this.http.get(`${this.userApiUrl}detail`);
+    }
+
+    getUserById(id: string) {        
+        return this.http.get(`${this.userApiUrl}user?id=${id}`)
+        .pipe(map((res: any) => {
+            return res.data;
+        }));
+    }
+
+    loginUser(username: string, password: string) {
+        return this.http.post(`${this.userApiUrl}login?UserName=${username}&Password=${password}`, {})
+        .pipe(map((res: any) => {
+            const user: any = Object.assign({}, res.userInfo);
+            user.token = res.token;
+            localStorage.setItem('user', JSON.stringify(user));
+            this.userSubject.next(user);
+            return user;
+        }));
     }
 }

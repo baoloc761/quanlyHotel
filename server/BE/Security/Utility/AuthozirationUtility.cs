@@ -24,7 +24,7 @@ namespace Security
     {
       var audience = _configuration["TokenAuthentication:siteUrl"];
       var secretKey = new SymmetricSecurityKey
-          (Encoding.UTF8.GetBytes("thisisasecretkey@123"));
+          (Encoding.UTF8.GetBytes(Constant.SecretKey));
 
       var signinCredentials = new SigningCredentials
          (secretKey, SecurityAlgorithms.HmacSha256);

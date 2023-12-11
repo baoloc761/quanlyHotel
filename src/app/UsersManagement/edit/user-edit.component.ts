@@ -13,7 +13,7 @@ export class UserEditComponent implements OnInit {
     loading = false;
     submitted = false;
     error?: string;
-    user: User = {}
+    user: any = {}
 
     constructor(
         private formBuilder: FormBuilder,
@@ -26,19 +26,23 @@ export class UserEditComponent implements OnInit {
         this.user = this.data
     }
 
-    myOptionsTypeUSer = [
-        { id: 1, name: 'admin', isAdmin: true },
-        { id: 2, name: 'userStaff', isAdmin: false }
-    ];
+    myOptionsTypeUSer: any[] = [];
     selected?: any = {};
 
     ngOnInit() {
+        this.accountService.getRolesList().subscribe(data => {
+            this.myOptionsTypeUSer = data.map((x: any) => {
+                return {id: x.id, name: x.name}});
+        });
         this.form = this.formBuilder.group({
             firstName: [this.user?.firstName || '', Validators.required],
             lastName: [this.user?.lastName || '', Validators.required],
-            username: [this.user?.username || '', Validators.required],
-            password: [this.user?.password || '', [Validators.required, Validators.minLength(6)]],
-            typeUser: [ this.enCodeValue(this.user?.typeUser) || null, Validators.required ]
+            userName: [this.user?.userName || '', Validators.required],
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            typeUser: [ this.enCodeValue({
+                id: this.user.userTypeId,
+                name: this.user.userTypeName
+            }) || null, Validators.required ]
         });
     }
 

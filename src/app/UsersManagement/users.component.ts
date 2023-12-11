@@ -30,7 +30,9 @@ export class UsersComponent implements OnInit {
         keyword: ['', null]
     });
     
-    this.users = this.accountService.getUsers(this.keyword)
+    this.accountService.getUsers(this.keyword).subscribe(data => {
+      this.users = data;
+    })
   }
 
   get keyword(): string {
@@ -38,14 +40,16 @@ export class UsersComponent implements OnInit {
   }
 
   search() {
-    this.users = this.accountService.getUsers(this.keyword)
+    this.accountService.getUsers(this.keyword).subscribe(data => {
+      this.users = data;
+    })
   }
 
-  handleUserInfo(user: User) {
+  handleUserInfo(user: any) {
     this.router.navigateByUrl('/account/user/' + user.id ) 
   }
 
-  handleEditUser(user: User) {
+  handleEditUser(user: any) {
     this.dialogRef.open(UserEditComponent, {
       width: '100%',
       panelClass: 'my-dialog-panel',
@@ -65,11 +69,11 @@ export class UsersComponent implements OnInit {
   }
 
   canView() {
-    return _.some(this.user.claims, (claim) => claim.canView)
+    return true
   }
 
 
   canEdit() {
-    return _.some(this.user.claims, (claim) => claim.canEdit)
+    return true
   }
 }

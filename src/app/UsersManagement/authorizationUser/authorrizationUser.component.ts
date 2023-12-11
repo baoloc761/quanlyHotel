@@ -23,7 +23,10 @@ export class authorrizationUserComponent implements OnInit {
     private translate: TranslateService) {}
 
   ngOnInit() {
-    this.users = this.accountService.getAllUsers();
+    this.accountService.getUsers().subscribe(data => {
+      this.users = data;
+    })
+
     this.listPages = this.accountService.getListPages();
     this.listPages.forEach(page => {
       this.pageStates[page.id] = false
@@ -37,22 +40,41 @@ export class authorrizationUserComponent implements OnInit {
   }
 
   handleCheckboxChange(pageId: any) {
-    const isChecked = this.pageStates[pageId];
-    const formData = this.selectedUserId;
-    if (_.isEmpty(formData)) return;
+    const isChecked = this.pageStates[pageId]
+    const userId = this.selectedUserId
+    const user = this.users.find(u => u.id === this.selectedUserId);
+    if (!user) return
+    type Claim = {
+      pageId: string
+    }
+    const existingClaimIndex = user.claims?.findIndex((c: Claim) => c.pageId === pageId)
 
     if (isChecked) {
-        const existingItem = this.pageIdRole.find(item => item.id === pageId);
+      if(_.isNil(existingClaimIndex)) {
+        const newClaim = {
+          pageId: pageId
+        }
+        if (_.isNil(user.claims)) {
+          user.claims = newClaim
+        } else {
+            user.claims = [newClaim];
+        }
+      }
+      const getListUser = _.forEach(this.users, (x) => x.claims === pageId)
+        const existingItem = this.pageIdRole.find(item => item.id === pageId)
         if (!existingItem) {
-            this.pageIdRole.push({ id: pageId });
+            this.pageIdRole.push({ id: pageId })
         }
     } else {
-        const index = this.pageIdRole.findIndex(item => item.id === pageId);
+        const index = this.pageIdRole.findIndex(item => item.id === pageId)
         if (index !== -1) {
-            this.pageIdRole.splice(index, 1);
+            this.pageIdRole.splice(index, 1)
+            user.claims.splice(index, 1);
         }
     }
-    return this.pageIdRole || [];
+    console.log('this.users', this.users)
+    
+    return this.pageIdRole || []
   }
 
   handleAuthorizationAccount() {

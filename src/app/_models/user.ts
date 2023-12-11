@@ -15,3 +15,23 @@ export class User {
         canViewNamePage: boolean }[];
     token?: string;
 }
+
+export interface RoleDTO {
+    id: string;
+    type: number;
+    name: string;
+    description: string;
+}
+
+export interface LoginDTO {
+    userName: string;
+    password: string;
+}
+
+export interface RegistUserDTO {
+    userName: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    password: string;
+}

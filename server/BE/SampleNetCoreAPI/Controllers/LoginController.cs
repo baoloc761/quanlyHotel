@@ -1,10 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using SampleNetCoreAPI.Models;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Security;
@@ -12,11 +7,10 @@ using BusinessAccess.Services.Interface;
 using System.Threading.Tasks;
 using Security.SecurityModel;
 using System.Linq;
-using Common;
+using SampleNetCoreAPI.Helper;
 using Security.AuthozirationAttributes;
-using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json.Linq;
-using System.Diagnostics.Tracing;
+using Common;
+using System.Collections.Generic;
 
 namespace SampleNetCoreAPI.Controllers
 {
@@ -36,13 +30,9 @@ namespace SampleNetCoreAPI.Controllers
     [HttpGet, Route("menus-list")]
     public async Task<IActionResult> GetMenuList()
     {
-      StringValues tokenString = "";
-      Request.Headers.TryGetValue("Authorization", out tokenString);
-      var token = new JwtSecurityToken(jwtEncodedString: tokenString.First().Replace("Bearer ", ""));
-      var userId = token?.Payload["email"]?.ToString() ?? "";
       try
       {
-        var menusList = await _userService.GetListMenu(new Guid(userId));
+        var menusList = await _userService.GetListMenu(AuthenticationUtils.getUserId(Request));
         return Ok(new
         {
           status = 200,
@@ -50,8 +40,7 @@ namespace SampleNetCoreAPI.Controllers
           data = menusList
         });
       }
-      catch (Exception ex)
-      {
+      catch {
         return Ok(new
         {
           status = 404,
@@ -60,7 +49,76 @@ namespace SampleNetCoreAPI.Controllers
       }
     }
 
+    [HttpGet, Route("detail")]
+    public async Task<IActionResult> GetUserDetail()
+    {
+      try
+      {
+        var users = await _userService.Detail(AuthenticationUtils.getUserId(Request));
+        return Ok(new
+        {
+          status = 200,
+          message = "GetUserDetailSuccess",
+          data = users.FirstOrDefault()
+        });
+      }
+      catch
+      {
+        return BadRequest("GetUserDetailFailed");
+      }
+    }
+    [HttpGet, Route("user")]
+    public async Task<IActionResult> GetUserById([FromQuery] Guid id)
+    {
+      try
+      {
+        var users = await _userService.Detail(id);
+        return Ok(new
+        {
+          status = 200,
+          message = "GetUserDetailSuccess",
+          data = users.FirstOrDefault()
+        });
+      }
+      catch
+      {
+        return BadRequest("GetUserDetailFailed");
+      }
+    }
+
+    [HttpGet, Route("roles-list")]
+    [CustomAuthorization(UserTypeEnum.Administrator, UserTypeEnum.Manager)]
+    public async Task<IActionResult> GetRolesList()
+    {
+      try
+      {
+        var roles = await _userService.GetRolesList(AuthenticationUtils.getUserId(Request));
+        List<RoleDTO> rolesList = new List<RoleDTO>();
+        foreach (var role in roles)
+        {
+          rolesList.Add(new RoleDTO
+          {
+            Id= role.Id,
+            Type= role.Type,
+            Name = role.UserTypeName,
+            Description = role.Description
+          });
+        }
+        return Ok(new
+        {
+          status = 200,
+          message = "GetRolesListSuccess",
+          data = rolesList
+        });
+      }
+      catch
+      {
+        return BadRequest("GetRolesListFailed");
+      }
+    }
+
     [HttpGet, Route("users-list")]
+    [CustomAuthorization(UserTypeEnum.Administrator, UserTypeEnum.Manager)]
     public async Task<IActionResult> GetUsersList([FromQuery] string keyword = "")
     {
       try
@@ -73,13 +131,9 @@ namespace SampleNetCoreAPI.Controllers
           data = users
         });
       }
-      catch (Exception ex)
+      catch
       {
-        return Ok(new
-        {
-          status = 404,
-          message = "GetUsersListFailed"
-        });
+        return BadRequest("GetUsersListFailed");
       }
     }
 
@@ -97,18 +151,24 @@ namespace SampleNetCoreAPI.Controllers
         if (checkLogin.Item1)
         {
           var basicUserInfo = checkLogin.Item4;
-          var AccessToken = _securityUtility.RenderAccessToken(new current_user_access()
+          var currentUserAccess = new current_user_access()
           {
             Email = basicUserInfo.Email,
             ExpireTime = DateTime.Now.AddDays(1),
             UserName = basicUserInfo.UserName,
-            UserType = basicUserInfo.UserTypeUser.FirstOrDefault().UserType?.Type ?? (int)UserTypeEnum.Staff,
-            UserTypeName = basicUserInfo.UserTypeUser.FirstOrDefault().UserType?.UserTypeName ?? string.Empty,
+            UserType = basicUserInfo.Type,
+            UserTypeName = basicUserInfo.UserTypeName ?? string.Empty,
             UserId = basicUserInfo.Id,
             PermissionList = basicUserInfo.PermissionList
+          };
+          var accessToken = _securityUtility.RenderAccessToken(currentUserAccess);
+          return Ok(new
+          {
+            status = 200,
+            message = checkLogin.Item2,
+            token = Json(accessToken).Value,
+            userInfo = currentUserAccess
           });
-          var result = Json(AccessToken);
-          return result;
         }
 
         return Ok(new
@@ -118,7 +178,7 @@ namespace SampleNetCoreAPI.Controllers
           reason = checkLogin.Item3
         });
       }
-      catch (Exception ex)
+      catch
       {
         return BadRequest
         ("ErrorGenerateToken");

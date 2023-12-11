@@ -19,9 +19,9 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">{{'UserName' | translate }}</label>
-                    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                        <div *ngIf="f.username.errors.required">{{"Validations.ParamNameIsRequired" | translate: {name : ('UserName' | translate) } }}</div>
+                    <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+                    <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                        <div *ngIf="f.userName.errors.required">{{"Validations.ParamNameIsRequired" | translate: {name : ('UserName' | translate) } }}</div>
                     </div>
                 </div>
                 <div class="mb-3">

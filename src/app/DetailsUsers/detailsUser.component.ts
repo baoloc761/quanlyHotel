@@ -8,7 +8,9 @@ export class DetailsUsersComponent implements OnInit {
   constructor(private route: ActivatedRoute, private accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.user = this.accountService.getUserById(this.id)
+    this.accountService.getUserById(this.id).subscribe(data => {
+      this.user = data
+    })
   }
 
   get id(): string {

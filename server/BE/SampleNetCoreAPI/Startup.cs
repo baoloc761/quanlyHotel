@@ -1,5 +1,4 @@
 using AutoMapper;
-using BusinessAccess.DataContract;
 using BusinessAccess.Repository;
 using BusinessAccess.Services.Implement;
 using BusinessAccess.Services.Interface;
@@ -11,15 +10,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using NotificationLayer;
-using SampleNetCoreAPI.Models;
 using Security;
 using Security.CustomAuthorization;
 using Security.Extension;
@@ -36,7 +33,7 @@ namespace HotelManagementCore
       var builder = new ConfigurationBuilder()
           .SetBasePath(Directory.GetCurrentDirectory())
           .AddJsonFile("appsettings.json");
-
+      //Configuration = builder.Build();
       var connectionStringConfig = builder.Build();
 
       ///ADd Config From Database
@@ -121,7 +118,6 @@ namespace HotelManagementCore
       #region Add Service to dependency injection
       services.AddTransient<IEmailProvider, EmailProvider>();
       services.AddTransient<IUserService, UserService>();
-      services.AddTransient<IBlogService, BlogService>();
       services.AddTransient<IAuthozirationUtility, AuthozirationUtility>();
       #endregion
 
@@ -137,17 +133,21 @@ namespace HotelManagementCore
 
       #region add cors
       var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+      var allowOrigins = Configuration.GetValue<string>("AllowOrigins");
       services.AddCors(options =>
       {
-        options.AddPolicy(MyAllowSpecificOrigins,
-                              policy =>
-                              {
-                                policy.WithOrigins("http://localhost:5688", "https://localhost:5689")
-                                .AllowAnyOrigin()
-                                .AllowCredentials()
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
-                              });
+        options.AddPolicy("CorsPolicy", builder =>
+        {
+          builder.WithOrigins(new string[] { "http://localhost:1234" })
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+            .AllowCredentials();
+        });
+        options.AddPolicy("AllowHeaders", builder =>
+        {
+          builder.WithOrigins(new string[] { "http://localhost:1234" })
+                  .WithHeaders(HeaderNames.ContentType, HeaderNames.Server, HeaderNames.AccessControlAllowHeaders, HeaderNames.AccessControlExposeHeaders, "x-custom-header", "x-path", "x-record-in-use", HeaderNames.ContentDisposition);
+        });
       });
       #endregion
 
@@ -198,13 +198,7 @@ namespace HotelManagementCore
         routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
       });
       var publicUrl = Configuration.GetSection("PublicSettings:publicUrl").Get<string>();
-      app.UseCors(
-         options => options.WithOrigins(publicUrl)
-         .AllowAnyHeader()
-         .AllowAnyMethod()
-         .SetIsOriginAllowed(origin => true)
-         .AllowCredentials()
-     );
+      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
       app.UseSwagger();
       app.UseSwaggerUI(c =>
       {
@@ -217,7 +211,6 @@ namespace HotelManagementCore
     {
       var config = new AutoMapper.MapperConfiguration(cfg =>
       {
-        cfg.CreateMap<Blog, BlogContract>();
         cfg.CreateMap<User, UserInfo>();
         cfg.CreateMap<UserInfo, User>();
 
