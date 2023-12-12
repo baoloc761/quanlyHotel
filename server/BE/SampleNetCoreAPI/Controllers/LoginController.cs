@@ -140,16 +140,16 @@ namespace SampleNetCoreAPI.Controllers
 
     [HttpPost, Route("update-user")]
     [CustomAuthorization(UserTypeEnum.Administrator, UserTypeEnum.Manager)]
-    public async Task<IActionResult> UpdateUser([FromBody] User updatedUser)
+    public async Task<IActionResult> UpdateUser([FromBody] User user)
     {
       try
       {
-        if (updatedUser == null)
+        if (user == null)
         {
           return BadRequest("InvalidUserData");
         }
 
-        var users = await _userService.UpdateUserDetail(updatedUser);
+        var users = await _userService.Update(user);
         return Ok(new
         {
           status = 200,
