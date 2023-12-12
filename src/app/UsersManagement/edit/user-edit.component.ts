@@ -36,15 +36,15 @@ export class UserEditComponent implements OnInit {
                 return {id: x.id, name: x.name}});
         });
         this.form = this.formBuilder.group({
-            firstName: [this.user?.firstName || '', Validators.required],
-            lastName: [this.user?.lastName || '', Validators.required],
-            userName: [this.user?.userName || '', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]],
-            typeUser: [ this.enCodeValue({
+            FirstName: [this.user?.firstName || '', Validators.required],
+            LastName: [this.user?.lastName || '', Validators.required],
+            UserName: [this.user?.userName || '', Validators.required],
+            Email: [this.user?.email || '', Validators.required],
+            Password: ['', [Validators.required, Validators.minLength(6)]],
+            UserTypeUser: [ this.enCodeValue({
                 id: this.user.userTypeId,
                 name: this.user.userTypeName
-            }) || null, Validators.required ],
-            isEdit: [this.user?.isEdit || false]
+            }) || null, Validators.required ]
         });
           
     }
@@ -78,7 +78,8 @@ export class UserEditComponent implements OnInit {
         }
 
         this.loading = true;
-        const newUser = {...this.user, ...this.form.value, typeUser: this.deCode(this.f.typeUser.value)}
+        const id = this.user.id
+        const newUser = {id, ...this.form.value, UserTypeUser: this.deCode(this.f.UserTypeUser.value)}
         this.subscription = this.accountService.updateUser(newUser).subscribe(
             (data) => {
                 if (data) {

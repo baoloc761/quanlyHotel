@@ -4,6 +4,7 @@
 	"UserName": "Tên đăng nhập",
 	"FirstName": "Họ",
 	"LastName": "Tên và lót",
+	"Email": "Email",
 	"UserID": "User ID",
 	"Password": "Mật khẩu",
 	"Register": "Đăng ký",

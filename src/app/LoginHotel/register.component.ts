@@ -15,7 +15,6 @@ export class RegisterComponent implements OnInit {
     loading = false;
     submitted = false;
     error?: string;
-    isEdit?: boolean;
     subscription?: Subscription;
 
     constructor(

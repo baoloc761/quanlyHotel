@@ -111,9 +111,9 @@ export class AccountService {
     }
 
     updateUser(user: User) {
-        return this.http.post(`${this.userApiUrl}update-user`, {user})
+        return this.http.post(`${this.userApiUrl}update-user`, user || {})
         .pipe(map((res: any) => {
-            return res.data;
+            return res;
         }));
     }
 
