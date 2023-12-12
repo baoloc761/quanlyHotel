@@ -18,6 +18,7 @@ namespace BusinessAccess.Services.Interface
     Task<(bool, string, string, UserInfo)> CheckLogin(string username, string password);
     Task<List<Menu>> GetListMenu(Guid userId);
     Task<List<UserInfo>> Detail(Guid userId);
+    Task<User> UpdateUserDetail(User updatedUser);
   }
 
   public class UserInfo : BaseEntity

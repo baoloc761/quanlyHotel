@@ -109,6 +109,36 @@ namespace BusinessAccess.Services.Implement
       return await GetAllUsers(keyword: userId.ToString());
     }
 
+    public async Task<User> UpdateUserDetail(User updatedUser)
+    {
+      if (updatedUser == null || updatedUser.Id == Guid.Empty)
+      {
+        throw new ArgumentException("Updated user information is not provided or invalid.");
+      }
+
+      try
+      {
+        var user = await GetUserById(updatedUser.Id);
+        if (user == null)
+        {
+          throw new KeyNotFoundException($"User with ID {updatedUser.Id} was not found.");
+        }
+
+        user.UserName = updatedUser.UserName;
+        user.Email = updatedUser.Email;
+        user.FirstName = updatedUser.FirstName;
+        user.LastName = updatedUser.LastName;
+
+        await _userRepository.UpdateAsync(user);
+        return user;
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+    }
+
+
     // first param: success or not, second param: message, third param: reason (if any)
     public async Task<(bool, string, string, UserInfo)> CheckLogin(string username, string password)
     {

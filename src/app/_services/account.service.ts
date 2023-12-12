@@ -48,10 +48,6 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
     }
 
-    updateUser(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/edit`, {user});
-    }
-
     auThorrizationUser(getListPage: any) {
         const usersKey = 'angular-list-role-page-users'
         const listPagesJSON = JSON.stringify(getListPage)
@@ -111,6 +107,13 @@ export class AccountService {
             localStorage.setItem('user', JSON.stringify(user));
             this.userSubject.next(user);
             return user;
+        }));
+    }
+
+    updateUser(user: User) {
+        return this.http.post(`${this.userApiUrl}update-user`, {user})
+        .pipe(map((res: any) => {
+            return res.data;
         }));
     }
 

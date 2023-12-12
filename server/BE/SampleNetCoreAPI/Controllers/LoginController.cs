@@ -11,6 +11,7 @@ using SampleNetCoreAPI.Helper;
 using Security.AuthozirationAttributes;
 using Common;
 using System.Collections.Generic;
+using DataAccess.Model;
 
 namespace SampleNetCoreAPI.Controllers
 {
@@ -134,6 +135,31 @@ namespace SampleNetCoreAPI.Controllers
       catch
       {
         return BadRequest("GetUsersListFailed");
+      }
+    }
+
+    [HttpPost, Route("update-user")]
+    [CustomAuthorization(UserTypeEnum.Administrator, UserTypeEnum.Manager)]
+    public async Task<IActionResult> UpdateUser([FromBody] User updatedUser)
+    {
+      try
+      {
+        if (updatedUser == null)
+        {
+          return BadRequest("InvalidUserData");
+        }
+
+        var users = await _userService.UpdateUserDetail(updatedUser);
+        return Ok(new
+        {
+          status = 200,
+          message = "GetUserDetailSuccess",
+          data = users
+        });
+      }
+      catch
+      {
+        return BadRequest("GetUserDetailFailed");
       }
     }
 

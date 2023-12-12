@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '@app/_models';
 import { AccountService } from '@app/_services';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 @Component({ templateUrl: 'user-edit.component.html', styleUrls: [ './user-edit.component.scss'] })
 export class UserEditComponent implements OnInit {
@@ -12,7 +13,8 @@ export class UserEditComponent implements OnInit {
     loading = false;
     submitted = false;
     error?: string;
-    user: any = {}
+    user: any = {};
+    private subscription: Subscription | undefined
 
     constructor(
         private formBuilder: FormBuilder,
@@ -69,33 +71,35 @@ export class UserEditComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
-
-        // reset alert on submit
         this.error = '';
 
-        // stop here if form is invalid
         if (this.form.invalid) {
             return;
         }
 
         this.loading = true;
         const newUser = {...this.user, ...this.form.value, typeUser: this.deCode(this.f.typeUser.value)}
-        console.log(newUser)
-        this.accountService.updateUser(newUser)
-            .pipe(first())
-            .subscribe({
-                next: () => {
+        this.subscription = this.accountService.updateUser(newUser).subscribe(
+            (data) => {
+                if (data) {
                     const msg = this.translate.instant('ActionEntityResult', { entityName: this.translate.instant('Account'), actionName: this.translate.instant('Edit'), result:  this.translate.instant('Success') })
                     this.openSnackBar(msg, this.translate.instant('Success'))
                     this.dialogRef.closeAll()
-                },
-                error: error => {
-                    this.error = error;
-                    this.loading = false;
-                    const msg = this.translate.instant('ActionEntityResultWithReason', { entityName: this.translate.instant('Account'), actionName: this.translate.instant('Edit'), result:  this.translate.instant('Failed'), reason: error })
-                    this.openSnackBar(msg, this.translate.instant('Failed'))
                 }
-            });
+            },
+            (error) => {
+                this.error = error;
+                this.loading = false;
+                const msg = this.translate.instant('ActionEntityResultWithReason', { entityName: this.translate.instant('Account'), actionName: this.translate.instant('Edit'), result:  this.translate.instant('Failed'), reason: error })
+                this.openSnackBar(msg, this.translate.instant('Failed'))
+            }
+        );
+    }
+
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     cancel() {
