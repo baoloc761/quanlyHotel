@@ -1,7 +1,7 @@
 <div class="col-md-12">
   <select [(ngModel)]="selectedUserId" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
     <ng-container *ngIf="users.length > 0">
-      <option *ngFor="let user of users" [value]="user.id">{{user.username}}</option>
+      <option *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
     </ng-container>
   </select>
   <ng-container *ngIf="listPages.length > 0">

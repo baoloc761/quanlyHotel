@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AccountService } from '@app/_services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'authorizastion-user',
@@ -16,6 +17,8 @@ export class authorrizationUserComponent implements OnInit {
   listPages: any[] = [];
   pageIdRole: { id: string }[] = [];
   pageStates: {[pageId: string]: boolean} = {};
+  private subscription: Subscription | undefined
+
   
   constructor(private snackBar: MatSnackBar, 
     private accountService: AccountService, 
@@ -27,10 +30,24 @@ export class authorrizationUserComponent implements OnInit {
       this.users = data;
     })
 
-    this.listPages = this.accountService.getListPages();
+    this.subscription = this.accountService.getMenusList().subscribe(
+      (data) => {
+          this.listPages = data;
+      },
+      (error) => {
+          console.error('Error fetching data:', error);
+          this.listPages = [];
+      }
+    );
     this.listPages.forEach(page => {
       this.pageStates[page.id] = false
     })
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+        this.subscription.unsubscribe();
+    }
   }
 
   openSnackBar(message: string, action: string) {

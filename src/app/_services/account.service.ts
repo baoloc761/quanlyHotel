@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { catchError, map } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { environment } from '@environments/environment';
 import { RoleDTO, User } from '@app/_models';
 
@@ -52,6 +52,69 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}/users/edit`, {user});
     }
 
+    auThorrizationUser(getListPage: any) {
+        const usersKey = 'angular-list-role-page-users'
+        const listPagesJSON = JSON.stringify(getListPage)
+        localStorage.setItem(usersKey, listPagesJSON)
+        return getListPage || []
+    }
+
+    getRolesList() {
+       return this.http.get(`${this.userApiUrl}roles-list`)
+       .pipe(map((res: any) => {
+            return res.data || [];
+        }));
+    }
+
+    getMenusList() {
+        return this.http.get(`${this.userApiUrl}menus-list`)
+        .pipe(
+            map((res: any) => {
+                console.log('data', res);
+                return res.data || [];
+            }),
+            catchError((error) => {
+                // Xử lý lỗi ở đây
+                console.error('Error occurred:', error);
+                // Thường thì bạn sẽ muốn trả về một Observable khác hoặc rethrow lỗi
+                return throwError(error);
+            })
+        );
+    }
+
+    getUsers(keyword?: string) {
+        return this.http.get(`${this.userApiUrl}users-list${keyword ? ('?keyword=' +  keyword) : ''}`)
+        .pipe(map((res: any) => {
+            return res.data || [];
+        }));
+    }
+
+    getUserLoginDetail() {
+        return this.http.get(`${this.userApiUrl}detail`);
+    }
+
+    GetUsersList() {
+        return this.http.get(`${this.userApiUrl}users-list`);
+    }
+
+    getUserById(id: string) {        
+        return this.http.get(`${this.userApiUrl}user?id=${id}`)
+        .pipe(map((res: any) => {
+            return res.data;
+        }));
+    }
+
+    loginUser(username: string, password: string) {
+        return this.http.post(`${this.userApiUrl}login?UserName=${username}&Password=${password}`, {})
+        .pipe(map((res: any) => {
+            const user: any = Object.assign({}, res.userInfo);
+            user.token = res.token;
+            localStorage.setItem('user', JSON.stringify(user));
+            this.userSubject.next(user);
+            return user;
+        }));
+    }
+
     getListPages() {
         const listPages = [
             {
@@ -80,55 +143,5 @@ export class AccountService {
             }
         ];
         return listPages;
-    }
-
-    auThorrizationUser(getListPage: any) {
-        const usersKey = 'angular-list-role-page-users'
-        const listPagesJSON = JSON.stringify(getListPage)
-        localStorage.setItem(usersKey, listPagesJSON)
-        return getListPage || []
-    }
-
-    getRolesList() {
-       return this.http.get(`${this.userApiUrl}roles-list`)
-       .pipe(map((res: any) => {
-            return res.data || [];
-        }));
-    }
-
-    getMenusList() {
-        return this.http.get(`${this.userApiUrl}menus-list`)
-        .pipe(map((res: any) => {
-            return res.data || [];
-        }));
-    }
-
-    getUsers(keyword?: string) {
-        return this.http.get(`${this.userApiUrl}users-list${keyword ? ('?keyword=' +  keyword) : ''}`)
-        .pipe(map((res: any) => {
-            return res.data || [];
-        }));
-    }
-
-    getUserLoginDetail() {
-        return this.http.get(`${this.userApiUrl}detail`);
-    }
-
-    getUserById(id: string) {        
-        return this.http.get(`${this.userApiUrl}user?id=${id}`)
-        .pipe(map((res: any) => {
-            return res.data;
-        }));
-    }
-
-    loginUser(username: string, password: string) {
-        return this.http.post(`${this.userApiUrl}login?UserName=${username}&Password=${password}`, {})
-        .pipe(map((res: any) => {
-            const user: any = Object.assign({}, res.userInfo);
-            user.token = res.token;
-            localStorage.setItem('user', JSON.stringify(user));
-            this.userSubject.next(user);
-            return user;
-        }));
     }
 }

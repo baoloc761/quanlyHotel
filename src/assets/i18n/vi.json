@@ -63,5 +63,6 @@
 	},
 	"WelcomeUser": "Xin chào {{user}}",
 	"RegistNewAccount": "+ Đăng ký người dùng",
+	"EditAccount": "+ Cập nhật tài  khoản",
 	"enterName": "Vui lòng nhập \"{{name}}\""
 }

@@ -63,5 +63,6 @@
 	},
 	"WelcomeUser": "Welcome {{user}}",
 	"RegistNewAccount": "+ Regist New Account",
+	"EditAccount": "+ Edit Account",
 	"enterName": "Please enter \"{{name}}\""
 }

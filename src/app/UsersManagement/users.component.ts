@@ -18,6 +18,7 @@ export class UsersComponent implements OnInit {
   form!: FormGroup;
   users: any[] = [];
   user: any = JSON.parse(localStorage.getItem('user') || '{claims: []}')
+  isEdit?: boolean
 
   constructor(private formBuilder: FormBuilder,
      private accountService: AccountService,
@@ -30,7 +31,7 @@ export class UsersComponent implements OnInit {
         keyword: ['', null]
     });
     
-    this.accountService.getUsers(this.keyword).subscribe(data => {
+    this.accountService.getUsers(this.keyword || '').subscribe(data => {
       this.users = data;
     })
   }
@@ -49,7 +50,12 @@ export class UsersComponent implements OnInit {
     this.router.navigateByUrl('/account/user/' + user.id ) 
   }
 
+  checkEdit(isEdit: boolean) {
+    return isEdit
+  }
+
   handleEditUser(user: any) {
+    user.isEdit = this.isEdit = true
     this.dialogRef.open(UserEditComponent, {
       width: '100%',
       panelClass: 'my-dialog-panel',

@@ -6,7 +6,6 @@ import { User } from '@app/_models';
 import { AccountService } from '@app/_services';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs/operators';
-
 @Component({ templateUrl: 'user-edit.component.html', styleUrls: [ './user-edit.component.scss'] })
 export class UserEditComponent implements OnInit {
     form!: FormGroup;
@@ -42,8 +41,10 @@ export class UserEditComponent implements OnInit {
             typeUser: [ this.enCodeValue({
                 id: this.user.userTypeId,
                 name: this.user.userTypeName
-            }) || null, Validators.required ]
+            }) || null, Validators.required ],
+            isEdit: [this.user?.isEdit || false]
         });
+          
     }
 
     // convenience getter for easy access to form fields

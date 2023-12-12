@@ -7,6 +7,7 @@ import { AccountService } from '@app/_services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { RoleDTO } from '@app/_models';
+import { Subscription } from 'rxjs';
 
 @Component({ templateUrl: 'register.component.html', styleUrls: [ './register.component.scss'] })
 export class RegisterComponent implements OnInit {
@@ -14,6 +15,8 @@ export class RegisterComponent implements OnInit {
     loading = false;
     submitted = false;
     error?: string;
+    isEdit?: boolean;
+    subscription?: Subscription;
 
     constructor(
         private formBuilder: FormBuilder,
