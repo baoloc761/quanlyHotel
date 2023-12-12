@@ -55,7 +55,7 @@ namespace BusinessAccess.Services.Implement
     {
       Expression<Func<User, bool>> filter = (x) => string.IsNullOrEmpty(keyword)
         || x.Id.ToString().ToLower().IndexOf(keyword.ToLower()) != -1
-        || x.Email.ToString().ToLower().IndexOf(keyword.ToLower()) != -1
+        //|| x.Email.ToString().ToLower().IndexOf(keyword.ToLower()) != -1
         || x.FirstName.ToString().ToLower().IndexOf(keyword.ToLower()) != -1
         || x.LastName.ToString().ToLower().IndexOf(keyword.ToLower()) != -1;
       var result = _userRepository.Filter(filter);
@@ -109,25 +109,25 @@ namespace BusinessAccess.Services.Implement
       return await GetAllUsers(keyword: userId.ToString());
     }
 
-    public async Task<User> UpdateUserDetail(User updatedUser)
+    public async Task<User> UpdateUserDetail(User newUser)
     {
-      if (updatedUser == null || updatedUser.Id == Guid.Empty)
+      if (newUser == null || newUser.Id == Guid.Empty)
       {
         throw new ArgumentException("Updated user information is not provided or invalid.");
       }
 
       try
       {
-        var user = await GetUserById(updatedUser.Id);
+        var user = await GetUserById(newUser.Id);
         if (user == null)
         {
-          throw new KeyNotFoundException($"User with ID {updatedUser.Id} was not found.");
+          throw new KeyNotFoundException($"User with ID {newUser.Id} was not found.");
         }
 
-        user.UserName = updatedUser.UserName;
-        user.Email = updatedUser.Email;
-        user.FirstName = updatedUser.FirstName;
-        user.LastName = updatedUser.LastName;
+        user.UserName = user.UserName;
+        user.Email = user.Email;
+        user.FirstName = user.FirstName;
+        user.LastName = user.LastName;
 
         await _userRepository.UpdateAsync(user);
         return user;
