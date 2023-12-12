@@ -88,9 +88,7 @@ export class authorrizationUserComponent implements OnInit {
             this.pageIdRole.splice(index, 1)
             user.claims.splice(index, 1);
         }
-    }
-    console.log('this.users', this.users)
-    
+    }    
     return this.pageIdRole || []
   }
 

@@ -70,7 +70,6 @@ export class AccountService {
         return this.http.get(`${this.userApiUrl}menus-list`)
         .pipe(
             map((res: any) => {
-                console.log('data', res);
                 return res.data || [];
             }),
             catchError((error) => {
