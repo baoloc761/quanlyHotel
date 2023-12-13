@@ -17,6 +17,7 @@ namespace SampleNetCoreAPI.Controllers
 {
   [Produces("application/json")]
   [Route("api/[controller]/")]
+  [ApiExplorerSettings(GroupName = "authentication")]
   public class LoginController : Controller
   {
     private readonly IUserService _userService;
@@ -41,7 +42,8 @@ namespace SampleNetCoreAPI.Controllers
           data = menusList
         });
       }
-      catch {
+      catch
+      {
         return Ok(new
         {
           status = 404,
@@ -99,8 +101,8 @@ namespace SampleNetCoreAPI.Controllers
         {
           rolesList.Add(new RoleDTO
           {
-            Id= role.Id,
-            Type= role.Type,
+            Id = role.Id,
+            Type = role.Type,
             Name = role.UserTypeName,
             Description = role.Description
           });

@@ -8,6 +8,68 @@ namespace DataAccess.Migrations
   {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
+
+
+      migrationBuilder.CreateTable(
+         name: "attachment_groups",
+         columns: table => new
+         {
+           Id = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false, defaultValueSql: "newsequentialid()"),
+           GroupName = table.Column<string>(nullable: false),
+           Description = table.Column<string>(nullable: false),
+           Active = table.Column<bool>(nullable: false, defaultValue: true),
+           CreatedTime = table.Column<DateTime>(nullable: true, defaultValue: DateTime.UtcNow),
+           UpdatedTime = table.Column<DateTime>(nullable: true, defaultValue: DateTime.UtcNow)
+         },
+         constraints: table =>
+         {
+           table.PrimaryKey("PK_Attachment_Groups", x => x.Id);
+         });
+
+      migrationBuilder.CreateTable(
+          name: "attachments",
+          columns: table => new
+          {
+            Id = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false, defaultValueSql: "newsequentialid()"),
+            FileGroupId = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false),
+            FileName = table.Column<string>(nullable: false),
+            Title = table.Column<string>(nullable: true),
+            ContentType = table.Column<string>(nullable: false),
+            FileExtension = table.Column<string>(nullable: false),
+            Src = table.Column<string>(type: "varchar(MAX)", nullable: false),
+            Active = table.Column<bool>(nullable: false, defaultValue: true),
+            CreatedTime = table.Column<DateTime>(nullable: true, defaultValue: DateTime.UtcNow),
+            UpdatedTime = table.Column<DateTime>(nullable: true, defaultValue: DateTime.UtcNow)
+          },
+          constraints: table =>
+          {
+            table.PrimaryKey("PK_Attachments", x => x.Id);
+
+            table.ForeignKey(
+                      name: "FK_attachments_attachment_groups_FileGroupId",
+                      column: x => x.FileGroupId,
+                      principalTable: "attachment_groups",
+                      principalColumn: "Id",
+                      onDelete: ReferentialAction.Cascade);
+          });
+
+      migrationBuilder.CreateTable(
+          name: "user_attachments",
+          columns: table => new
+          {
+            Id = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false, defaultValueSql: "newsequentialid()"),
+            UserId = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false),
+            FileId = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false),
+            Active = table.Column<bool>(nullable: false, defaultValue: true),
+            CreatedTime = table.Column<DateTime>(nullable: true, defaultValue: DateTime.UtcNow),
+            UpdatedTime = table.Column<DateTime>(nullable: true, defaultValue: DateTime.UtcNow)
+          },
+          constraints: table =>
+          {
+            table.PrimaryKey("PK_User_Attachments", x => x.Id);
+          });
+
+
       migrationBuilder.CreateTable(
         name: "menus",
         columns: table => new
@@ -54,6 +116,12 @@ namespace DataAccess.Migrations
             FirstName = table.Column<string>(nullable: true),
             LastName = table.Column<string>(nullable: true),
             Password = table.Column<string>(nullable: true),
+            AvatarImage = table.Column<string>(nullable: true),
+            AvatarFileId = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: true),
+            IdBackImage = table.Column<string>(nullable: true),
+            IdBackFileId = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: true),
+            IdFrontImage = table.Column<string>(nullable: true),
+            IdFrontFileId = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: true),
             CreatedTime = table.Column<DateTime>(nullable: true, defaultValue: DateTime.UtcNow),
             UpdatedTime = table.Column<DateTime>(nullable: true, defaultValue: DateTime.UtcNow)
           },
@@ -120,6 +188,21 @@ namespace DataAccess.Migrations
           });
 
       migrationBuilder.CreateIndex(
+         name: "IX_attachments_FileGroupId",
+         table: "attachments",
+         column: "FileGroupId");
+
+      migrationBuilder.CreateIndex(
+         name: "IX_user_attachments_FileId",
+         table: "user_attachments",
+         column: "FileId");
+
+      migrationBuilder.CreateIndex(
+         name: "IX_user_attachments_UserId",
+         table: "user_attachments",
+         column: "UserId");
+
+      migrationBuilder.CreateIndex(
           name: "IX_user_type_users_UserId",
           table: "user_type_users",
           column: "UserId");
@@ -150,6 +233,16 @@ namespace DataAccess.Migrations
       var menu1 = Guid.NewGuid();
       var menu2 = Guid.NewGuid();
       var menu3 = Guid.NewGuid();
+
+
+      migrationBuilder.InsertData(
+        table: "attachment_groups",
+        columns: new string[] { "GroupName", "Description" },
+        values: new object[,] {
+                   { "Common files", "To store common files" },
+                   { "Personal files", "To store personal files such as: profile image, avatar, id card images (back/front), etc" }
+        }
+      );
 
       migrationBuilder.InsertData(
       table: "menus",
@@ -210,6 +303,12 @@ namespace DataAccess.Migrations
 
     protected override void Down(MigrationBuilder migrationBuilder)
     {
+      migrationBuilder.DropTable(
+          name: "attachment_groups");
+
+      migrationBuilder.DropTable(
+          name: "attachments");
+
       migrationBuilder.DropTable(
         name: "menus");
 

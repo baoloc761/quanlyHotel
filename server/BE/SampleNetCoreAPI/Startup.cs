@@ -33,19 +33,19 @@ namespace HotelManagementCore
       var builder = new ConfigurationBuilder()
           .SetBasePath(Directory.GetCurrentDirectory())
           .AddJsonFile("appsettings.json");
-      //Configuration = builder.Build();
-      var connectionStringConfig = builder.Build();
+      Configuration = builder.Build();
+      //var connectionStringConfig = builder.Build();
 
-      ///ADd Config From Database
-      var config = new ConfigurationBuilder()
-          .SetBasePath(env.ContentRootPath)
-          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-          .AddEnvironmentVariables().AddEntityFrameworkConfig(options =>
-              options.UseSqlServer(connectionStringConfig.GetConnectionString("MSSQLServerConnection"))
-           );
+      /////ADd Config From Database
+      //var config = new ConfigurationBuilder()
+      //    .SetBasePath(env.ContentRootPath)
+      //    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+      //    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+      //    .AddEnvironmentVariables().AddEntityFrameworkConfig(options =>
+      //        options.UseSqlServer(connectionStringConfig.GetConnectionString("MSSQLServerConnection"))
+      //     );
 
-      Configuration = config.Build();
+      //Configuration = config.Build();
     }
 
     public IConfiguration Configuration { get; }
@@ -118,6 +118,7 @@ namespace HotelManagementCore
       #region Add Service to dependency injection
       services.AddTransient<IEmailProvider, EmailProvider>();
       services.AddTransient<IUserService, UserService>();
+      services.AddTransient<IAttachmentService, AttachmentService>();
       services.AddTransient<IAuthozirationUtility, AuthozirationUtility>();
       #endregion
 
@@ -157,7 +158,8 @@ namespace HotelManagementCore
       #region Enable swagger - api document
       services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hotel Management API", Version = "v1" });
+        c.SwaggerDoc("authentication", new OpenApiInfo { Title = "Authentication API", Version = "v1" });
+        c.SwaggerDoc("others", new OpenApiInfo { Title = "Others API", Version = "v1" });
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
           In = ParameterLocation.Header,
@@ -202,7 +204,8 @@ namespace HotelManagementCore
       app.UseSwagger();
       app.UseSwaggerUI(c =>
       {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel Management API V1");
+        c.SwaggerEndpoint("/swagger/authentication/swagger.json", "Authentication API");
+        c.SwaggerEndpoint("/swagger/others/swagger.json", "Others API");
         c.EnableValidator(null);
       });
     }

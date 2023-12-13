@@ -81,12 +81,20 @@ namespace BusinessAccess.Services.Implement
     }
     public async Task<User> Update(User user)
     {
+      if (!string.IsNullOrEmpty(user.Password))
+      {
+        user.Password = Encrypt.getHash(user.Password);
+      }
       await _userRepository.UpdateAsync(user);
       Expression<Func<User, bool>> filter = (x) => x.Id == user.Id;
       return await _userRepository.Filter(filter).FirstOrDefaultAsync();
     }
     public async Task<User> Add(User user)
     {
+      if (!string.IsNullOrEmpty(user.Password))
+      {
+        user.Password = Encrypt.getHash(user.Password);
+      }
       await _userRepository.InsertAsync(user);
       Expression<Func<User, bool>> filter = (x) => x.UserName == user.UserName;
       return await _userRepository.Filter(filter).FirstOrDefaultAsync();
@@ -176,7 +184,8 @@ namespace BusinessAccess.Services.Implement
       {
         var permissionList = await _usersMenusPermissionRepository
         .Filter(x => x.UserId == user.Id)
-        .Select(x => new {
+        .Select(x => new
+        {
           Permission = JsonConvert.DeserializeObject<Dictionary<string, object>>(Regex.Replace(x.PermissionList, @"\\", "")),
           MenuId = x.MenuId
         })
