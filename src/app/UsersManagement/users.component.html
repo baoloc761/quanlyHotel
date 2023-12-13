@@ -14,6 +14,7 @@
             <th>{{ 'UserName' | translate }}</th>
             <th>{{ 'FirstName' | translate }}</th>
             <th>{{ 'LastName' | translate }}</th>
+            <th>{{ 'Email' | translate }}</th>
             <th>{{ 'Action' | translate }}</th>
         </tr>
     </thead>
@@ -29,6 +30,7 @@
                 <td>{{user.userName}}</td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
                 <td>
                     <span>
                         <button mat-icon-button (click)="handleUserInfo(user)" [disabled]="!canView()"><i class="fas fa-info" [ngClass]="{disabled: !canView()}"></i></button>
