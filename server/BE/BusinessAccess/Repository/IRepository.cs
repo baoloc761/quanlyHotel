@@ -17,8 +17,8 @@ namespace BusinessAccess.Repository
     Task InsertAsync(T entity, bool saveChange = true);
     void Update(T entity, bool saveChange = true);
     Task UpdateAsync(T entity, bool saveChange = true);
-    void Delete(T entity, bool saveChange = true);
-    Task DeleteAsync(T entity, bool saveChange = true);
+    void Delete(T entity, bool isHardDelete = true , bool saveChange = true);
+    Task DeleteAsync(T entity, bool isHardDelete = true, bool saveChange = true);
   }
 
 }

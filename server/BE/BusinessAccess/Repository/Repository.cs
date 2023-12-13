@@ -2,6 +2,7 @@ using DataAccess.DBContext;
 using DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -81,6 +82,7 @@ namespace BusinessAccess.Repository
         throw new ArgumentNullException("entity");
       }
       entity.UpdatedTime = DateTime.Now;
+      context.Update(entity);
       if (saveChange)
         context.SaveChanges();
     }
@@ -92,28 +94,49 @@ namespace BusinessAccess.Repository
         throw new ArgumentNullException("entity");
       }
       entity.UpdatedTime = DateTime.Now;
+      var exist = await context.Set<T>().FindAsync(entity.Id);
+      context.Entry(exist).CurrentValues.SetValues(entity);
       if (saveChange)
+      {
         await context.SaveChangesAsync();
+      }
     }
 
-    public void Delete(T entity, bool saveChange = true)
+    public void Delete(T entity, bool isHardDelete = true, bool saveChange = true)
     {
       if (entity == null)
       {
         throw new ArgumentNullException("entity");
       }
-      entities.Remove(entity);
+      if (isHardDelete)
+      {
+        entities.Remove(entity);
+      } else
+      {
+        entity.Active = false;
+        var exist = context.Set<T>().Find(entity.Id);
+        context.Entry(exist).CurrentValues.SetValues(entity);
+      }
       if (saveChange)
         context.SaveChanges();
     }
 
-    public async Task DeleteAsync(T entity, bool saveChange = true)
+    public async Task DeleteAsync(T entity, bool isHardDelete = true, bool saveChange = true)
     {
       if (entity == null)
       {
         throw new ArgumentNullException("entity");
       }
-      entities.Remove(entity);
+      if (isHardDelete)
+      {
+        entities.Remove(entity);
+      }
+      else
+      {
+        entity.Active = false;
+        var exist = await context.Set<T>().FindAsync(entity.Id);
+        context.Entry(exist).CurrentValues.SetValues(entity);
+      }
       if (saveChange)
         await context.SaveChangesAsync();
     }

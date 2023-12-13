@@ -41,12 +41,12 @@ export class UserEditComponent implements OnInit {
             UserName: [this.user?.userName || '', Validators.required],
             Email: [this.user?.email || '', Validators.required],
             Password: ['', [Validators.required, Validators.minLength(6)]],
+            Id: this.user?.id,
             UserTypeUser: [ this.enCodeValue({
                 id: this.user.userTypeId,
                 name: this.user.userTypeName
             }) || null, Validators.required ]
         });
-          
     }
 
     // convenience getter for easy access to form fields
@@ -78,8 +78,7 @@ export class UserEditComponent implements OnInit {
         }
 
         this.loading = true;
-        const id = this.user.id
-        const newUser = {id, ...this.form.value, UserTypeUser: this.deCode(this.f.UserTypeUser.value)}
+        const newUser = {...this.form.value, UserTypeUser: [this.deCode(this.f.UserTypeUser.value)]}
         this.subscription = this.accountService.updateUser(newUser).subscribe(
             (data) => {
                 if (data) {

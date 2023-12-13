@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -110,11 +110,11 @@ export class AccountService {
         }));
     }
 
-    updateUser(user: User) {
-        return this.http.post(`${this.userApiUrl}update-user`, {user})
-        .pipe(map((res: any) => {
-            return res;
-        }));
+    updateUser(userUpdata: any) {
+        return this.http.post(`${this.userApiUrl}update-user`, userUpdata)
+            .pipe(map((res: any) => {
+                return res.data || {}
+        }))
     }
 
     getListPages() {
