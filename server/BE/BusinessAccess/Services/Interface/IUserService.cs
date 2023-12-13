@@ -13,12 +13,11 @@ namespace BusinessAccess.Services.Interface
     Task<User> GetUserById(Guid id);
     Task<User> Update(User user);
     Task<User> Add(User user);
-    Task Delete(User user);
+    Task Delete(Guid userId);
     // first param: success or not, second param: message, third param: reason (if any)
     Task<(bool, string, string, UserInfo)> CheckLogin(string username, string password);
     Task<List<Menu>> GetListMenu(Guid userId);
     Task<List<UserInfo>> Detail(Guid userId);
-    Task<User> UpdateUserDetail(User updatedUser);
   }
 
   public class UserInfo : BaseEntity

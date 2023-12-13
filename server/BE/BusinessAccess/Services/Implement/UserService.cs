@@ -55,7 +55,7 @@ namespace BusinessAccess.Services.Implement
     {
       Expression<Func<User, bool>> filter = (x) => string.IsNullOrEmpty(keyword)
         || x.Id.ToString().ToLower().IndexOf(keyword.ToLower()) != -1
-        //|| x.Email.ToString().ToLower().IndexOf(keyword.ToLower()) != -1
+        || x.Email.ToString().ToLower().IndexOf(keyword.ToLower()) != -1
         || x.FirstName.ToString().ToLower().IndexOf(keyword.ToLower()) != -1
         || x.LastName.ToString().ToLower().IndexOf(keyword.ToLower()) != -1;
       var result = _userRepository.Filter(filter);
@@ -81,20 +81,22 @@ namespace BusinessAccess.Services.Implement
     }
     public async Task<User> Update(User user)
     {
+      user.Password = Encrypt.getHash(user.Password);
       await _userRepository.UpdateAsync(user);
       Expression<Func<User, bool>> filter = (x) => x.Id == user.Id;
       return await _userRepository.Filter(filter).FirstOrDefaultAsync();
     }
     public async Task<User> Add(User user)
     {
+      user.Password = Encrypt.getHash(user.Password);
       await _userRepository.InsertAsync(user);
       Expression<Func<User, bool>> filter = (x) => x.UserName == user.UserName;
       return await _userRepository.Filter(filter).FirstOrDefaultAsync();
     }
-    public async Task Delete(User user)
+    public async Task Delete(Guid userId)
     {
-      user.Active = false;
-      _userRepository.Update(user);
+      var user = await _userRepository.GetAsync(userId);
+      await _userRepository.DeleteAsync(user);
     }
 
     public async Task<List<Menu>> GetListMenu(Guid userId)
@@ -108,36 +110,6 @@ namespace BusinessAccess.Services.Implement
     {
       return await GetAllUsers(keyword: userId.ToString());
     }
-
-    public async Task<User> UpdateUserDetail(User newUser)
-    {
-      if (newUser == null || newUser.Id == Guid.Empty)
-      {
-        throw new ArgumentException("Updated user information is not provided or invalid.");
-      }
-
-      try
-      {
-        var user = await GetUserById(newUser.Id);
-        if (user == null)
-        {
-          throw new KeyNotFoundException($"User with ID {newUser.Id} was not found.");
-        }
-
-        user.UserName = user.UserName;
-        user.Email = user.Email;
-        user.FirstName = user.FirstName;
-        user.LastName = user.LastName;
-
-        await _userRepository.UpdateAsync(user);
-        return user;
-      }
-      catch (Exception ex)
-      {
-        throw ex;
-      }
-    }
-
 
     // first param: success or not, second param: message, third param: reason (if any)
     public async Task<(bool, string, string, UserInfo)> CheckLogin(string username, string password)

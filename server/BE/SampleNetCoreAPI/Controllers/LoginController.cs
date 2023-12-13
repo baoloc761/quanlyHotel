@@ -58,14 +58,65 @@ namespace SampleNetCoreAPI.Controllers
         var users = await _userService.Detail(AuthenticationUtils.getUserId(Request));
         return Ok(new
         {
-          status = 200,
-          message = "GetUserDetailSuccess",
+          status = 400,
+          message = new
+          {
+            message = "ActionEntityResult",
+            actionName = "Get",
+            entityName = "UserDetail",
+            result = "Failed"
+          },
           data = users.FirstOrDefault()
         });
       }
       catch
       {
-        return BadRequest("GetUserDetailFailed");
+        return Ok(new
+        {
+          status = 400,
+          message = new
+          {
+            languageKey = "ActionEntityResult",
+            actionName = "Get",
+            entityName = "UserDetail",
+            result = "Failed"
+          }
+        });
+      }
+    }
+
+    [HttpGet, Route("delete")]
+    [CustomAuthorization(UserTypeEnum.Administrator, UserTypeEnum.Manager)]
+    public async Task<IActionResult> DeleteUser([FromQuery] Guid userId)
+    {
+      try
+      {
+        await _userService.Delete(userId);
+        return Ok(new
+        {
+          status = 200,
+          message = new
+          {
+            languageKey = "ActionEntityResult",
+            actionName = "Delete",
+            entityName = "User",
+            result = "Success"
+          }
+        });
+      }
+      catch
+      {
+        return Ok(new
+        {
+          status = 400,
+          message = new
+          {
+            languageKey = "ActionEntityResult",
+            actionName = "Delete",
+            entityName = "User",
+            result = "Failed"
+          }
+        });
       }
     }
     [HttpGet, Route("user")]
@@ -128,13 +179,29 @@ namespace SampleNetCoreAPI.Controllers
         return Ok(new
         {
           status = 200,
-          message = "GetUsersListSuccess",
+          message = new
+          {
+            message = "ActionEntityResult",
+            actionName = "Get",
+            entityName = "UsersList",
+            result = "Success"
+          },
           data = users
         });
       }
       catch
       {
-        return BadRequest("GetUsersListFailed");
+        return Ok(new
+        {
+          status = 400,
+          message = new
+          {
+            message = "ActionEntityResult",
+            actionName = "Get",
+            entityName = "UsersList",
+            result = "Failed"
+          }
+        });
       }
     }
 
@@ -153,13 +220,13 @@ namespace SampleNetCoreAPI.Controllers
         return Ok(new
         {
           status = 200,
-          message = "GetUserDetailSuccess",
+          message = "UpdatedUserSuccess",
           data = users
         });
       }
       catch
       {
-        return BadRequest("GetUserDetailFailed");
+        return BadRequest("UpdatedUserSuccessFailed");
       }
     }
 
